@@ -61,7 +61,7 @@ class _TripDetailsState extends State<TripDetails> {
                       ],
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => showSuccessDialog(context),
 
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 40,vertical: 5),
@@ -130,4 +130,27 @@ class _TripDetailsState extends State<TripDetails> {
       ),
     );
   }
+
+  void showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // prevent dismiss by tapping outside
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: const Text("Submission Successful"),
+          content: const Text("Thank you! Someone will reach out to you within 2 days for more information."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
