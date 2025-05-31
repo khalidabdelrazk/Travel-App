@@ -1,12 +1,13 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/screens/root/trip%20details/trip_details.dart';
 import 'package:travel/utils/data.dart';
 import 'package:travel/widgets/drawer.dart';
-
 import '../../core/model/places.dart';
 import '../../theme/color.dart';
 import '../../utils/constant.dart';
 import '../../widgets/bottombar_item.dart';
+import 'chatbot/chatbot.dart';
 import 'explore.dart';
 import 'home.dart';
 
@@ -49,7 +50,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
     {
       "icon": "assets/icons/navigation.svg",
       "active_icon": "assets/icons/navigation.svg",
-      "page": ExplorePage(),
+      "page": ExplorePage(onScroll: (p0) => onScroll(p0)),
       "title": "Explore",
     },
     {
@@ -62,10 +63,10 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
       "title": "Home",
     },
     {
-      "icon": "assets/icons/settings.svg",
-      "active_icon": "assets/icons/settings.svg",
-      "page": Container(),
-      "title": "Test",
+      "icon": "assets/icons/chatgpt.svg",
+      "active_icon": "assets/icons/chatgpt.svg",
+      "page": ChatScreen(),
+      "title": "Chatbot",
     },
     {
       "icon": "assets/icons/settings.svg",
@@ -75,7 +76,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
     },
   ];
 
-  void onPageChanged(int index) async{
+  void onPageChanged(int index) async {
     _controller.reset();
     setState(() {
       activeTab = index;
@@ -89,6 +90,8 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
       appBar: AppBar(
         foregroundColor: Colors.transparent,
         elevation: 0,
+        forceMaterialTransparency: true,
+        shadowColor: Theme.of(context).shadowColor,
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -108,9 +111,18 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
       drawer: MyDrawer(onTap: (p0, p1) => onTap(p0, p1)),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: getBarPage(),
-      floatingActionButton: !showFloatingActionButton ? null : getBottomBar(),
-      floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerDocked,
+
+      floatingActionButton:
+          !showFloatingActionButton
+              ? FadeOut(
+                delay: Duration(milliseconds: 500),
+                child: getBottomBar(),
+              )
+              : FadeIn(
+                delay: Duration(milliseconds: 500),
+                child: getBottomBar(),
+              ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -119,10 +131,8 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
       index: activeTab,
       children: List.generate(
         barItems.length,
-            (index) => FadeTransition(
-          child: barItems[index]["page"],
-          opacity: _animation,
-        ),
+        (index) =>
+            FadeTransition(child: barItems[index]["page"], opacity: _animation),
       ),
     );
   }
@@ -149,7 +159,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: List.generate(
           2,
-              (index) => BottomBarItem(
+          (index) => BottomBarItem(
             activeTab == index
                 ? barItems[index]["active_icon"]
                 : barItems[index]["icon"],
@@ -175,6 +185,12 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
   void setPopular(Place val) {
     setState(() {
       popular = val;
+    });
+  }
+
+  void onScroll(bool isVisible) {
+    setState(() {
+      showFloatingActionButton = isVisible;
     });
   }
 }

@@ -74,7 +74,9 @@ class _MyDrawerState extends State<MyDrawer> {
                     children: [
                       SvgPicture.asset(
                         'assets/icons/home.svg',
-                        color: Theme.of(context).primaryColor,
+                        width: width*0.08,
+                        colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+                        // color: Theme.of(context).primaryColor,
                       ),
                       SizedBox(width: width * 0.02),
                       Text(
@@ -96,8 +98,10 @@ class _MyDrawerState extends State<MyDrawer> {
                 Row(
                   children: [
                     SvgPicture.asset(
-                      'assets/icons/theme.svg',
-                      color: Theme.of(context).primaryColor,
+                      'assets/icons/paint.svg',
+                      width: width*0.08,
+                      colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+                      // color: Theme.of(context).primaryColor,
                     ),
                     SizedBox(width: width * 0.02),
                     Text("Theme", style: TextTheme.of(context).headlineMedium),
@@ -143,6 +147,35 @@ class _MyDrawerState extends State<MyDrawer> {
                         }
                       },
                     ),
+                  ),
+                ),
+                SizedBox(height: height * 0.02),
+                Divider(
+                  height: 3,
+                  color: Theme.of(context).primaryColor,
+                  indent: width * 0.01,
+                  endIndent: width * 0.01,
+                ),
+                SizedBox(height: height * 0.02),
+                InkWell(
+                  onTap: () {
+                    widget.onTap(false,2);
+                    Navigator.pop(context);
+                  },
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/chatgpt.svg',
+                        width: width*0.08,
+                        colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+                        // color: Theme.of(context).primaryColor,
+                      ),
+                      SizedBox(width: width * 0.02),
+                      Text(
+                        "Chatbot AI",
+                        style: TextTheme.of(context).headlineMedium,
+                      ),
+                    ],
                   ),
                 ),
                 // Expanded(child: Spacer())
