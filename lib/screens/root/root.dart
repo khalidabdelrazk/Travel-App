@@ -114,10 +114,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
 
       floatingActionButton:
           !showFloatingActionButton
-              ? FadeOut(
-                delay: Duration(milliseconds: 500),
-                child: getBottomBar(),
-              )
+              ? SizedBox.shrink()
               : FadeIn(
                 delay: Duration(milliseconds: 500),
                 child: getBottomBar(),
