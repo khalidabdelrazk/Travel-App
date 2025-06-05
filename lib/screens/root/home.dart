@@ -1,11 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/core/model/places.dart';
-import '../../theme/color.dart';
-import '../../utils/data.dart';
-import '../../widgets/category_item.dart';
-import '../../widgets/notification_box.dart';
-import '../../widgets/popular_item.dart';
+import '../../core/theme/color.dart';
+import '../../core/utils/data.dart';
+import '../../presentation/common/category_item.dart';
+import '../../presentation/common/notification_box.dart';
+import '../../presentation/common/popular_item.dart';
+
 
 class HomePage extends StatefulWidget {
   final Function(bool, int) onTap;

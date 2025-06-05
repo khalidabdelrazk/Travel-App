@@ -2,7 +2,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../theme/color.dart';
+import '../../core/theme/color.dart';
 
 class NotificationBox extends StatelessWidget {
   const NotificationBox({super.key, this.onTap, this.notifiedNumber = 0});

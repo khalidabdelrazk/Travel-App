@@ -1,12 +1,15 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/core/provider/theme_provider.dart';
 import 'package:travel/core/routes/routes.dart';
-import 'package:travel/screens/root/root.dart';
-import 'package:travel/theme/app_theme.dart';
-import 'package:travel/theme/color.dart';
+import 'core/di/di.dart';
+import 'core/theme/app_theme.dart';
+import 'core/utils/my_bloc_observer.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
+  configureDependencies();
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),

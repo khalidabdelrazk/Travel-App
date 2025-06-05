@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:travel/screens/root/trip%20details/trip_details.dart';
-import 'package:travel/utils/data.dart';
-import 'package:travel/widgets/drawer.dart';
-
+import 'package:travel/core/utils/data.dart';
 import '../../core/model/places.dart';
-import '../../theme/color.dart';
-import '../../utils/constant.dart';
-import '../../widgets/bottombar_item.dart';
-import 'explore.dart';
+import '../../core/theme/color.dart';
+import '../../core/utils/constant.dart';
+import '../../presentation/explore details/ui/explore_details.dart';
+import '../../presentation/trips/ui/explore.dart';
+import '../../presentation/common/bottombar_item.dart';
+import '../../presentation/common/drawer.dart';
 import 'home.dart';
 
 class RootApp extends StatefulWidget {
@@ -70,7 +69,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
     {
       "icon": "assets/icons/settings.svg",
       "active_icon": "assets/icons/settings.svg",
-      "page": TripDetails(place: popular),
+      "page": ExploreDetails(),
       "title": popular.name,
     },
   ];

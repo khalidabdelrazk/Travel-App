@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travel/core/model/places.dart';
-import 'package:travel/utils/constant.dart';
+import 'package:travel/core/utils/constant.dart';
 
 import 'custom_image.dart';
 

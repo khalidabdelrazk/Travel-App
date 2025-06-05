@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../theme/color.dart';
+import '../../core/theme/color.dart';
 
 class BottomBarItem extends StatelessWidget {
   const BottomBarItem(this.icon, this.title, {super.key, this.onTap, this.color = inActiveColor, this.activeColor = primaryLight, this.isActive = false, this.isNotified = false});

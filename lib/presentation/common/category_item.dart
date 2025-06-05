@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/color.dart';
+import '../../core/theme/color.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem({ super.key, required this.data, this.onTap, this.color = primaryLight });

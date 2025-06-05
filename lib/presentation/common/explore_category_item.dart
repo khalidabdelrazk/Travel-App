@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/color.dart';
+import '../../core/theme/color.dart';
 
 class ExploreCategoryItem extends StatelessWidget {
   const ExploreCategoryItem({
@@ -29,7 +29,7 @@ class ExploreCategoryItem extends StatelessWidget {
           children: [
             SizedBox(height: 8),
             Text(
-              data["name"],
+              data,
               maxLines: 1,
               style: TextTheme.of(context).bodyMedium!.copyWith(
                 color:

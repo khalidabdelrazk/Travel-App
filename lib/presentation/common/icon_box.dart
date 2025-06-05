@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../theme/color.dart';
+import '../../core/theme/color.dart';
 
 class IconBox extends StatelessWidget {
   const IconBox({ super.key, required this.child, this.onTap});

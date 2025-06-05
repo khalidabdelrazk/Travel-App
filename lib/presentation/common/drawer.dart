@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/core/provider/theme_provider.dart';
-import '../theme/color.dart';
+import '../../core/theme/color.dart';
 
 class MyDrawer extends StatefulWidget {
   final Function(bool,int) onTap;
