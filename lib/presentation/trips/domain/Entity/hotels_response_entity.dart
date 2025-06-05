@@ -1,6 +1,6 @@
 import 'package:travel/presentation/trips/domain/Entity/explore_response_entity.dart';
 
-class HotelsResponseEntity extends ExploreResponseEntity {
+class HotelsResponseEntity extends ExploreResponseEntity{
   HotelsResponseEntity({
     super.id,
     super.name,
@@ -9,7 +9,7 @@ class HotelsResponseEntity extends ExploreResponseEntity {
     super.location,
     super.photos,
     super.price,
-    this.rating,
+    super.rating,
   });
 
   HotelsResponseEntity.fromJson(dynamic json) {
@@ -22,5 +22,5 @@ class HotelsResponseEntity extends ExploreResponseEntity {
     price = json['price'];
     rating = json['rating'];
   }
-  int? rating;
+
 }

@@ -14,20 +14,29 @@ class HotelsRemoteDataSourceImpl implements HotelsRemoteDataSource {
 
   @override
   Future<Either<Failures, List<HotelsResponseEntity>>> getHotels(
-      String? controllerText) async {
+    String? controllerText,
+  ) async {
     final connectivityResult = await Connectivity().checkConnectivity();
+    Map<String, dynamic>? queryParams;
+
+    if (controllerText != null && controllerText.trim().isNotEmpty) {
+      queryParams = {'city': controllerText};
+    }
 
     try {
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
-        final response =
-        await apiManager.getData(endPoints: ApiEndPoints.getHotels);
+        final response = await apiManager.getData(
+          endPoints: ApiEndPoints.getHotels,
+          queryParams: queryParams,
+        );
 
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           List<dynamic> jsonList = response.data;
-          List<HotelsResponseEntity> trips = jsonList
-              .map((item) => HotelsResponseEntity.fromJson(item))
-              .toList();
+          List<HotelsResponseEntity> trips =
+              jsonList
+                  .map((item) => HotelsResponseEntity.fromJson(item))
+                  .toList();
 
           return Right(trips);
         }

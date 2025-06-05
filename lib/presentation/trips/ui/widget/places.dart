@@ -5,12 +5,12 @@ import 'package:travel/core/di/di.dart';
 import 'package:travel/presentation/trips/ui/cubit/explore_states.dart';
 import 'package:travel/presentation/trips/ui/cubit/explore_view_model.dart';
 import '../../../../core/routes/route_names.dart';
-import '../../../../core/theme/app_theme.dart';
 import '../../../common/explore_item.dart';
 
 class GetPlaces extends StatefulWidget {
   final int tabIndex;
-  const GetPlaces({super.key, required this.tabIndex});
+  final TextEditingController controller;
+  const GetPlaces({super.key, required this.tabIndex, required this.controller});
 
   @override
   State<GetPlaces> createState() => _GetPlacesState();
@@ -21,14 +21,14 @@ class _GetPlacesState extends State<GetPlaces> {
   bool initialized = false;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
     if (!initialized) {
       if (widget.tabIndex == 0) {
-        exploreViewModel.getTrips('controllerText');
+        exploreViewModel.getTrips(widget.controller.text);
       } else if (widget.tabIndex == 1) {
-        exploreViewModel.getHotels('controllerText');
+        exploreViewModel.getHotels(widget.controller.text);
       }
       initialized = true;
     }
@@ -86,7 +86,7 @@ class _GetPlacesState extends State<GetPlaces> {
                   (int index) => StaggeredTile.count(2, index.isEven ? 3 : 2),
               mainAxisSpacing: 8,
               crossAxisSpacing: 8,
-              padding: const EdgeInsets.only(top: 8, bottom: 16),
+              padding: const EdgeInsets.only(top: 8, bottom: 70),
             ),
           );
         }

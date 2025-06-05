@@ -1,6 +1,6 @@
-import 'package:travel/presentation/trips/domain/Entity/explore_response_entity.dart';
+import 'explore_response_entity.dart';
 
-class TripsResponseEntity extends ExploreResponseEntity {
+class TripsResponseEntity extends ExploreResponseEntity{
   TripsResponseEntity({
     super.id,
     super.name,
@@ -11,7 +11,7 @@ class TripsResponseEntity extends ExploreResponseEntity {
     super.city,
     this.createdAt,
     this.updatedAt,
-  });
+    super.rating,});
 
   TripsResponseEntity.fromJson(dynamic json) {
     id = json['_id'];
@@ -23,7 +23,11 @@ class TripsResponseEntity extends ExploreResponseEntity {
     city = json['city'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    rating = json['rating'];
   }
+
   String? createdAt;
   String? updatedAt;
+
+
 }

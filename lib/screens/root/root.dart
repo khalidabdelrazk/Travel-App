@@ -74,7 +74,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
     },
   ];
 
-  void onPageChanged(int index) async{
+  void onPageChanged(int index) async {
     _controller.reset();
     setState(() {
       activeTab = index;
@@ -108,8 +108,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: getBarPage(),
       floatingActionButton: !showFloatingActionButton ? null : getBottomBar(),
-      floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -118,10 +117,8 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
       index: activeTab,
       children: List.generate(
         barItems.length,
-            (index) => FadeTransition(
-          child: barItems[index]["page"],
-          opacity: _animation,
-        ),
+        (index) =>
+            FadeTransition(child: barItems[index]["page"], opacity: _animation),
       ),
     );
   }
@@ -148,7 +145,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: List.generate(
           2,
-              (index) => BottomBarItem(
+          (index) => BottomBarItem(
             activeTab == index
                 ? barItems[index]["active_icon"]
                 : barItems[index]["icon"],

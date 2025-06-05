@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 import '../../../../../../../core/api manager/api_endpints.dart';
 import '../../../../../../../core/api manager/api_manager.dart';
 import '../../../../../../../core/error/failures.dart';
-import '../../../../domain/Entity/hotels_response_entity.dart';
 import '../../../../domain/Entity/trips_response_entity.dart';
 import '../trips_remote_data_source.dart';
 
@@ -15,20 +14,29 @@ class TripsRemoteDataSourceImpl implements TripsRemoteDataSource {
 
   @override
   Future<Either<Failures, List<TripsResponseEntity>>> getTrips(
-      String? controllerText) async {
+    String? controllerText,
+  ) async {
     final connectivityResult = await Connectivity().checkConnectivity();
+    Map<String, dynamic>? queryParams;
+
+    if (controllerText != null && controllerText.trim().isNotEmpty) {
+      queryParams = {'city': controllerText};
+    }
 
     try {
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
-        final response =
-        await apiManager.getData(endPoints: ApiEndPoints.getTrips);
+        final response = await apiManager.getData(
+          endPoints: ApiEndPoints.getTrips,
+          queryParams: queryParams,
+        );
 
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           List<dynamic> jsonList = response.data;
-          List<TripsResponseEntity> trips = jsonList
-              .map((item) => TripsResponseEntity.fromJson(item))
-              .toList();
+          List<TripsResponseEntity> trips =
+              jsonList
+                  .map((item) => TripsResponseEntity.fromJson(item))
+                  .toList();
           return Right(trips);
         }
         return Left(ServerError(errorMessage: 'Server error'));
