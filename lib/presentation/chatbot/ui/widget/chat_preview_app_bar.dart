@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travel/core/routes/route_names.dart';
-
 import '../../../../core/theme/color.dart';
 
 
@@ -57,36 +55,6 @@ class ChatPreviewAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
-      actions: [
-        Container(
-          // padding: EdgeInsets.all(1),
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Theme.of(context).primaryColor,
-              width: 1.5,
-            ),
-          ),
-          child: SizedBox(
-            width: 30,
-            height: 30,
-            child: IconButton(
-              alignment: Alignment.center,
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                Navigator.pushNamed(context, RouteNames.homeScreen);
-              },
-              icon: Icon(
-                Icons.remove,
-                color: Theme.of(context).primaryColor,
-                size: 20.0,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 20),
-      ],
     );
   }
 }
