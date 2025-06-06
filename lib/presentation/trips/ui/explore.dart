@@ -20,8 +20,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   final TextEditingController searchController = TextEditingController();
   late final ExploreViewModel exploreViewModel = getIt<ExploreViewModel>();
   late TabController _tabController;
-  Timer? _debounce; // Debounce timer
-  String _lastQuery = ''; // Stores the last fetched query for the current tab
+  Timer? _debounce;
+  String _lastQuery = '';
 
   @override
   void initState() {

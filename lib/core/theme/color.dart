@@ -18,6 +18,12 @@ const textBoxColor = Colors.white;
 const textColor = Color(0xFF333333);
 const labelColor = Color(0xFF8A8989);
 const actionColor = Color(0xFFe54140);
+const appbarLightColor = Color(0xff4361EE);
+const appbarDarkColor = Color(0xff121212);
+const sendMessageLightColor = Color(0xffDEE2E6);
+const receiveMessageLightColor = Color(0x682CA8FF);
+const onlineColor = Color(0xFF43EE7D);
+
 
 const bottomBarColor = Colors.white;
 const inActiveColor = Colors.grey;

@@ -17,17 +17,16 @@ class ApiManager {
   }
 
   Future<Response> postData({
+    required String baseurl,
     required String endPoints,
     Map<String, dynamic>? queryParams,
     Object? data,
   }) async {
     return dio.post(
-      ApiConstants.baseUrl + endPoints,
+      baseurl + endPoints,
       queryParameters: queryParams,
       data: data,
-      options: Options(
-        validateStatus: (status) => true,
-      )
+      options: Options(validateStatus: (status) => true),
     );
   }
 }

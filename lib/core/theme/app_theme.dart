@@ -33,6 +33,8 @@ class AppTheme {
   final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: primaryLight,
+    cardColor: cardLightColor,
+    shadowColor: Colors.black,
     scaffoldBackgroundColor: appLightBgColor,
     fontFamily: GoogleFonts.inter().fontFamily,
     drawerTheme: DrawerThemeData(
@@ -43,8 +45,7 @@ class AppTheme {
       iconTheme: IconThemeData(color: mainColor),
       titleTextStyle: TextStyle(color: mainColor, fontSize: 20, fontWeight: FontWeight.w600),
     ),
-    cardColor: cardLightColor,
-    shadowColor: shadowColor,
+
     textTheme: appTextLightTheme,
     iconTheme: IconThemeData(color: mainColor),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(

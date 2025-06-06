@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/core/provider/theme_provider.dart';
+import 'package:travel/core/routes/route_names.dart';
 import '../../core/theme/color.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -74,7 +75,9 @@ class _MyDrawerState extends State<MyDrawer> {
                     children: [
                       SvgPicture.asset(
                         'assets/icons/home.svg',
-                        color: Theme.of(context).primaryColor,
+                        width: width*0.08,
+                        colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+                        // color: Theme.of(context).primaryColor,
                       ),
                       SizedBox(width: width * 0.02),
                       Text(
@@ -96,8 +99,10 @@ class _MyDrawerState extends State<MyDrawer> {
                 Row(
                   children: [
                     SvgPicture.asset(
-                      'assets/icons/theme.svg',
-                      color: Theme.of(context).primaryColor,
+                      'assets/icons/paint.svg',
+                      width: width*0.08,
+                      colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+                      // color: Theme.of(context).primaryColor,
                     ),
                     SizedBox(width: width * 0.02),
                     Text("Theme", style: TextTheme.of(context).headlineMedium),
@@ -124,15 +129,15 @@ class _MyDrawerState extends State<MyDrawer> {
                         color: Theme.of(context).primaryColor,
                       ),
                       items:
-                          ['Light', 'Dark'].map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: TextTheme.of(context).headlineSmall,
-                              ),
-                            );
-                          }).toList(),
+                      ['Light', 'Dark'].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextTheme.of(context).headlineSmall,
+                          ),
+                        );
+                      }).toList(),
                       onChanged: (String? newValue) {
                         if (newValue == null) return;
                         selectedTheme = newValue;
@@ -143,6 +148,35 @@ class _MyDrawerState extends State<MyDrawer> {
                         }
                       },
                     ),
+                  ),
+                ),
+                SizedBox(height: height * 0.02),
+                Divider(
+                  height: 3,
+                  color: Theme.of(context).primaryColor,
+                  indent: width * 0.01,
+                  endIndent: width * 0.01,
+                ),
+                SizedBox(height: height * 0.02),
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, RouteNames.chatBot);
+                  },
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/chatgpt.svg',
+                        width: width*0.08,
+                        colorFilter: ColorFilter.mode(Theme.of(context).primaryColor, BlendMode.srcIn),
+                        // color: Theme.of(context).primaryColor,
+                      ),
+                      SizedBox(width: width * 0.02),
+                      Text(
+                        "Chatbot AI",
+                        style: TextTheme.of(context).headlineMedium,
+                      ),
+                    ],
                   ),
                 ),
                 // Expanded(child: Spacer())
