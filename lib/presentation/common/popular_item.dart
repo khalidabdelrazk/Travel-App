@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travel/core/model/places.dart';
 import 'package:travel/core/utils/constant.dart';
+import 'package:travel/presentation/home/domain/Entity/trips_response_entity.dart';
 
 import 'custom_image.dart';
 
@@ -12,7 +13,7 @@ class PopularItem extends StatelessWidget {
     this.onTap,
     this.radius = 20,
   });
-  final Place data;
+  final HomeTripsResponseEntity data;
   final double radius;
   final GestureTapCallback? onTap;
 
@@ -28,7 +29,7 @@ class PopularItem extends StatelessWidget {
       child: Stack(
         children: [
           CustomImage(
-            data.image,
+            data.photos![1],
             radius: radius,
             width: double.infinity,
             height: double.infinity,
@@ -55,7 +56,7 @@ class PopularItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  data.name,
+                  data.name!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -75,7 +76,7 @@ class PopularItem extends StatelessWidget {
                     ),
                     SizedBox(width: 5),
                     Text(
-                      data.location,
+                      data.location!,
                       style: TextStyle(fontSize: 13, color: Colors.white),
                     ),
                   ],

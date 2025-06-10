@@ -1,5 +1,4 @@
 import 'package:either_dart/either.dart';
-import 'package:travel/presentation/trips/domain/Entity/hotels_response_entity.dart';
 import 'package:travel/presentation/trips/domain/Entity/trips_response_entity.dart';
 import '../../../../../../core/error/failures.dart';
 

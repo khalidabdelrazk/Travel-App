@@ -17,16 +17,22 @@ class ApiManager {
   }
 
   Future<Response> postData({
-    required String baseurl,
-    required String endPoints,
-    Map<String, dynamic>? queryParams,
+    required String path,
     Object? data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
   }) async {
     return dio.post(
-      baseurl + endPoints,
-      queryParameters: queryParams,
+      path,
+      options: options,
+      queryParameters: queryParameters,
       data: data,
-      options: Options(validateStatus: (status) => true),
+      cancelToken: cancelToken,
+      onReceiveProgress: onReceiveProgress,
+      onSendProgress: onSendProgress
     );
   }
 }

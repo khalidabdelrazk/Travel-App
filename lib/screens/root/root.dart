@@ -4,6 +4,7 @@ import '../../core/model/places.dart';
 import '../../core/theme/color.dart';
 import '../../core/utils/constant.dart';
 import '../../presentation/explore details/ui/explore_details.dart';
+import '../../presentation/home/ui/home.dart';
 import '../../presentation/trips/ui/explore.dart';
 import '../../presentation/common/bottombar_item.dart';
 import '../../presentation/common/drawer.dart';
@@ -56,7 +57,6 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
       "active_icon": "assets/icons/home.svg",
       "page": HomePage(
         onTap: (p0, myIndex) => onTap(p0, myIndex),
-        objectPressed: (p0) => setPopular(p0),
       ),
       "title": "Home",
     },
@@ -65,12 +65,6 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
       "active_icon": "assets/icons/settings.svg",
       "page": Container(),
       "title": "Test",
-    },
-    {
-      "icon": "assets/icons/settings.svg",
-      "active_icon": "assets/icons/settings.svg",
-      "page": ExploreDetails(),
-      "title": popular.name,
     },
   ];
 
@@ -107,7 +101,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
       drawer: MyDrawer(onTap: (p0, p1) => onTap(p0, p1)),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: getBarPage(),
-      floatingActionButton: !showFloatingActionButton ? null : getBottomBar(),
+      floatingActionButton: getBottomBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
@@ -168,9 +162,4 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
     });
   }
 
-  void setPopular(Place val) {
-    setState(() {
-      popular = val;
-    });
-  }
 }
