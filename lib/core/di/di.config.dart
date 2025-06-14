@@ -35,6 +35,18 @@ import '../../presentation/chatbot/domain/repository/chatbot_repository.dart'
 import '../../presentation/chatbot/domain/use%20cases/chatbot_use_cases.dart'
     as _i959;
 import '../../presentation/chatbot/ui/cubit/chatbot_view_model.dart' as _i1069;
+import '../../presentation/explore%20details/data/Data%20Sources/impl/trip_details_remote_data_source_impl.dart'
+    as _i799;
+import '../../presentation/explore%20details/data/Data%20Sources/trip_details_remote_data_source.dart'
+    as _i720;
+import '../../presentation/explore%20details/data/Repository/trip_details_repository_impl.dart'
+    as _i929;
+import '../../presentation/explore%20details/domain/Repository/trip_details_repository.dart'
+    as _i91;
+import '../../presentation/explore%20details/domain/Use%20Case/trip_details_use_case.dart'
+    as _i536;
+import '../../presentation/explore%20details/ui/cubit/trip_details_view_model.dart'
+    as _i719;
 import '../../presentation/home/data/Data%20Sources/trips/home_trips_remote_data_source.dart'
     as _i569;
 import '../../presentation/home/data/Data%20Sources/trips/impl/home_trips_remote_data_source_impl.dart'
@@ -76,6 +88,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i682.TripsRemoteDataSource>(
       () => _i265.TripsRemoteDataSourceImpl(apiManager: gh<_i949.ApiManager>()),
     );
+    gh.factory<_i720.TripDetailsRemoteDataSource>(
+      () => _i799.TripDetailsRemoteDataSourceImpl(
+        apiManager: gh<_i949.ApiManager>(),
+      ),
+    );
     gh.factory<_i293.AuthRemoteDataSource>(
       () => _i1054.AuthRemoteDataSourceImpl(apiManager: gh<_i949.ApiManager>()),
     );
@@ -103,6 +120,16 @@ extension GetItInjectableX on _i174.GetIt {
         homeTripsRepository: gh<_i583.HomeTripsRepository>(),
       ),
     );
+    gh.factory<_i91.TripDetailsRepository>(
+      () => _i929.TripDetailsRepositoryImpl(
+        gh<_i720.TripDetailsRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i536.TripDetailsUseCase>(
+      () => _i536.TripDetailsUseCase(
+        tripDetailsRepository: gh<_i91.TripDetailsRepository>(),
+      ),
+    );
     gh.factory<_i1012.ExploreRepository>(
       () => _i1011.ExploreRepositoryImpl(
         gh<_i694.HotelsRemoteDataSource>(),
@@ -120,6 +147,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i959.ChatbotUseCases>(
       () => _i959.ChatbotUseCases(
         chatbotRepository: gh<_i765.ChatbotRepository>(),
+      ),
+    );
+    gh.factory<_i719.TripDetailsViewModel>(
+      () => _i719.TripDetailsViewModel(
+        tripDetailsUseCase: gh<_i536.TripDetailsUseCase>(),
       ),
     );
     gh.factory<_i940.TripsUseCase>(

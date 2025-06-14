@@ -1,7 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/presentation/common/dialog_utils.dart';
+import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_view_model.dart';
+import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_states.dart';
 import 'package:travel/presentation/trips/domain/Entity/explore_response_entity.dart';
+import '../../../core/di/di.dart';
 import '../../../core/theme/color.dart';
 import '../../../presentation/common/category_item.dart';
 import '../../../presentation/common/custom_image.dart';
@@ -14,6 +19,7 @@ class ExploreDetails extends StatefulWidget {
 }
 
 class _ExploreDetailsState extends State<ExploreDetails> {
+  late final TripDetailsViewModel tripDetailsViewModel = getIt<TripDetailsViewModel>();
   late double width;
   late double height;
   late List tripInfo;
@@ -53,15 +59,14 @@ class _ExploreDetailsState extends State<ExploreDetails> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments;
-
     if (args == null || args is! ExploreResponseEntity) {
       return const Scaffold(body: Center(child: Text("No data provided")));
     }
 
     data = args;
-
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+
     tripInfo = [
       {
         "icon": Icons.star_rate_rounded,
@@ -76,47 +81,59 @@ class _ExploreDetailsState extends State<ExploreDetails> {
         "value": '${data.price}',
       },
     ];
-    return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  imageSlider(),
-                  SizedBox(height: height * 0.02),
-                  detailsBar(),
-                  SizedBox(height: height * 0.02),
-                  placeInfo(),
-                  SizedBox(height: height * 0.02),
-                  Text(
-                    'Description',
-                    style: TextTheme.of(context).headlineMedium,
-                  ),
-                  Text(
-                    data.description ?? '',
-                    style: TextTheme.of(context).bodyMedium,
-                  ),
-                  SizedBox(height: height * 0.02),
-                  ElevatedButton(
-                    onPressed: () {},
 
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 5,
-                      ),
-                      backgroundColor: Theme.of(context).cardColor,
+    return BlocListener<TripDetailsViewModel, TripDetailsStates>(
+      bloc: tripDetailsViewModel,
+      listener: (context, state) {
+        if (state is DetailsSuccessState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Added to favorites!")),
+          );
+        } else if (state is DetailsErrorState) {
+          DialogUtils.showMessage(context: context, message: 'Error: ${state.errorMessage}');
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text("Error: ${state.errorMessage}")),
+          // );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    imageSlider(),
+                    SizedBox(height: height * 0.02),
+                    detailsBar(),
+                    SizedBox(height: height * 0.02),
+                    placeInfo(),
+                    SizedBox(height: height * 0.02),
+                    Text(
+                      'Description',
+                      style: TextTheme.of(context).headlineMedium,
                     ),
-                    child: Text("Book Now"),
-                  ),
-                  SizedBox(height: height * 0.02),
-                ],
+                    Text(
+                      data.description ?? '',
+                      style: TextTheme.of(context).bodyMedium,
+                    ),
+                    SizedBox(height: height * 0.02),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+                        backgroundColor: Theme.of(context).cardColor,
+                      ),
+                      child: Text("Book Now"),
+                    ),
+                    SizedBox(height: height * 0.02),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -150,21 +167,25 @@ class _ExploreDetailsState extends State<ExploreDetails> {
             ],
           ),
         ),
-        IconButton(
-          onPressed: () {
-            toggleFav = !toggleFav;
-            setState(() {});
+        BlocBuilder<TripDetailsViewModel, TripDetailsStates>(
+          bloc: tripDetailsViewModel,
+          builder: (context, state) {
+            return IconButton(
+              onPressed: () {
+                toggleFav = !toggleFav;
+                setState(() {});
+                tripDetailsViewModel.addToFav(data.id ?? '',toggleFav);
+              },
+              icon: Icon(
+                toggleFav ? Icons.favorite : Icons.favorite_border,
+                color: Colors.red,
+              ),
+            );
           },
-          icon: Icon(
-            toggleFav ? Icons.favorite : Icons.favorite_border,
-            color: Colors.red,
-          ),
         ),
       ],
     );
   }
-
-
 
   Widget placeInfo() {
     int index = 0;
@@ -173,10 +194,9 @@ class _ExploreDetailsState extends State<ExploreDetails> {
       padding: EdgeInsets.only(bottom: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children:
-            tripInfo.map((info) {
-              return CategoryItem(data: info, color: listColors[index++ % 10]);
-            }).toList(),
+        children: tripInfo.map((info) {
+          return CategoryItem(data: info, color: listColors[index++ % 10]);
+        }).toList(),
       ),
     );
   }
@@ -210,16 +230,13 @@ class _ExploreDetailsState extends State<ExploreDetails> {
                 },
               ),
             ),
-            // Left button
             Positioned(
               left: 10,
               top: height * 0.3 - 25,
               child: IconButton(
                 icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 28),
                 onPressed: () {
-                  final previous =
-                      (currentImageIndex - 1 + data.photos!.length) %
-                      data.photos!.length;
+                  final previous = (currentImageIndex - 1 + data.photos!.length) % data.photos!.length;
                   pageController.animateToPage(
                     previous,
                     duration: Duration(milliseconds: 500),
@@ -228,16 +245,11 @@ class _ExploreDetailsState extends State<ExploreDetails> {
                 },
               ),
             ),
-            // Right button
             Positioned(
               right: 10,
               top: height * 0.3 - 25,
               child: IconButton(
-                icon: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                  size: 28,
-                ),
+                icon: Icon(Icons.arrow_forward_ios, color: Colors.white, size: 28),
                 onPressed: () {
                   final next = (currentImageIndex + 1) % data.photos!.length;
                   pageController.animateToPage(
@@ -273,7 +285,7 @@ class _ExploreDetailsState extends State<ExploreDetails> {
 
   int getRandomNumberByTime() {
     final now = DateTime.now();
-    final seed = now.millisecondsSinceEpoch; // You can also use second/minute
+    final seed = now.millisecondsSinceEpoch;
     final random = Random(seed);
     return 20 + random.nextInt(11); // 20 to 30 inclusive
   }

@@ -1,9 +1,9 @@
-import 'package:either_dart/src/either.dart';
+import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel/core/api%20manager/api_constants.dart';
 import 'package:travel/core/api%20manager/api_endpints.dart';
 import 'package:travel/core/error/failures.dart';
-import '../../../../../../../core/api manager/api_manager.dart';
+import '../../../../../../core/api manager/api_manager.dart';
 import '../../../../domain/entity/chatbot_response.dart';
 import '../../../model/chatbot_response_dm.dart';
 import '../chatbot_data_source.dart';

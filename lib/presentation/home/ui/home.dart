@@ -29,8 +29,11 @@ class HomePageState extends State<HomePage> {
     homeViewModel.getTrips();
   }
 
+  late double height;
+
   @override
   Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: CustomScrollView(
@@ -55,14 +58,12 @@ class HomePageState extends State<HomePage> {
 
 
   buildBody() {
-    String? token = SharedPrefService.instance.getToken();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 0, bottom: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(token?? " hi"),
             SizedBox(height: 25),
             Container(
               color: Theme.of(context).scaffoldBackgroundColor,
@@ -100,12 +101,15 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  getPopulars() {
+  Widget getPopulars() {
     return BlocBuilder(
       bloc: homeViewModel,
       builder: (context, state) {
         if (state is LoadingState) {
-          return Center(child: CircularProgressIndicator());
+          return SizedBox(
+            height: height*0.4, // Matches the height of the CarouselSlider
+            child: Center(child: CircularProgressIndicator()),
+          );
         } else if (state is ErrorState) {
           return Center(
             child: Column(

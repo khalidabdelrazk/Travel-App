@@ -1,9 +1,10 @@
+
+
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:travel/presentation/trips/domain/Use%20Case/trips_use_case.dart';
-import 'package:travel/presentation/trips/ui/cubit/explore_states.dart';
-
 import '../../domain/Use Case/hotels_use_case.dart';
+import '../../domain/Use Case/trips_use_case.dart';
+import 'explore_states.dart';
 
 @injectable
 class ExploreViewModel extends Cubit<ExploreStates> {

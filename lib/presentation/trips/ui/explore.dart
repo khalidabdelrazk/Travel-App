@@ -1,13 +1,13 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:travel/core/di/di.dart';
-import 'package:travel/presentation/common/custom_text_field.dart';
-import 'package:travel/presentation/trips/ui/cubit/explore_states.dart';
-import 'package:travel/presentation/trips/ui/cubit/explore_view_model.dart';
+import '../../../core/di/di.dart';
 import '../../../core/routes/route_names.dart';
+import '../../common/custom_text_field.dart';
 import '../../common/explore_item.dart';
-import 'dart:async';
+import 'cubit/explore_states.dart';
+import 'cubit/explore_view_model.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
