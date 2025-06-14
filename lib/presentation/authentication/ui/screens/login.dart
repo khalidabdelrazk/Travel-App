@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/di.dart';
 import '../../../../core/routes/route_names.dart';
 import '../../../../core/theme/color.dart';
+import '../../../../core/utils/shared_pref_services.dart';
 import '../../../common/custom_button.dart';
 import '../../../common/custom_text_button.dart';
 import '../../../common/custom_text_field.dart';
@@ -43,8 +44,11 @@ class _LoginState extends State<Login> {
             title: "Success",
             message: 'Logged in successfully\nToken: ${state.response.token}',
             posActionName: 'OK',
+            posAction: () {
+              SharedPrefService.instance.setToken(state.response.token);
+              Navigator.pushReplacementNamed(context, RouteNames.homeScreen);
+            },
           );
-          Navigator.pushReplacementNamed(context, RouteNames.homeScreen);
         }
       },
       child: Scaffold(

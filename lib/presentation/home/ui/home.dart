@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/core/utils/shared_pref_services.dart';
 import 'package:travel/presentation/home/ui/cubit/home_states.dart';
 import 'package:travel/presentation/home/ui/cubit/home_view_model.dart';
 
@@ -52,47 +53,16 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  Widget getAppBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Hi, user",
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(height: 3),
-              Text(
-                "Let's Explore",
-                style: TextStyle(
-                  color: textColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                ),
-              ),
-            ],
-          ),
-        ),
-        NotificationBox(notifiedNumber: 1, onTap: () {}),
-      ],
-    );
-  }
 
   buildBody() {
+    String? token = SharedPrefService.instance.getToken();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 0, bottom: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(token?? " hi"),
             SizedBox(height: 25),
             Container(
               color: Theme.of(context).scaffoldBackgroundColor,
@@ -135,9 +105,21 @@ class HomePageState extends State<HomePage> {
       bloc: homeViewModel,
       builder: (context, state) {
         if (state is LoadingState) {
-          return CircularProgressIndicator();
+          return Center(child: CircularProgressIndicator());
         } else if (state is ErrorState) {
-          return Text("Error");
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(state.errorMessage, style: Theme.of(context).textTheme.labelLarge),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () => homeViewModel.getTrips(),
+                  child: const Text('Try Again'),
+                ),
+              ],
+            ),
+          );
         } else if (state is SuccessState) {
           return CarouselSlider(
             options: CarouselOptions(
@@ -147,7 +129,7 @@ class HomePageState extends State<HomePage> {
               viewportFraction: .75,
             ),
             items: List.generate(
-              populars.length,
+              state.response.length,
               (index) => GestureDetector(
                 onTap: () {
                   // Navigator.pushNamed(context, RouteNames.tripDetails,arguments: populars[index]);

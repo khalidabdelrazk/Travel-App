@@ -1,15 +1,20 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel/core/provider/theme_provider.dart';
 import 'package:travel/core/routes/routes.dart';
+import 'package:travel/core/utils/shared_pref_services.dart';
 import 'core/di/di.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/my_bloc_observer.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   configureDependencies();
+  await SharedPrefService.instance.init();
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),

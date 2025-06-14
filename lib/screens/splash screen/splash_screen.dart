@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/routes/route_names.dart';
+import '../../core/utils/shared_pref_services.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,11 +17,15 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
       if (mounted) {
-        Navigator.pushReplacementNamed(context, RouteNames.login);
+        Navigator.pushReplacementNamed(
+          context,
+          isLoggedIn ? RouteNames.homeScreen : RouteNames.login,
+        );
       }
     });
   }
 
+  bool get isLoggedIn => SharedPrefService.instance.getToken() != null;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -34,19 +39,19 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset("assets/images/Travel.png"),
-              SizedBox(width: width*0.03,),
-              Image.asset("assets/images/globe icon.png")
+              SizedBox(width: width * 0.03),
+              Image.asset("assets/images/globe icon.png"),
             ],
           ),
-          SizedBox(height: height*0.04,),
-          Text("Find Your Dream",style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),),
-          Text("Destination With Us",style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),)
+          SizedBox(height: height * 0.04),
+          Text(
+            "Find Your Dream",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+          Text(
+            "Destination With Us",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
         ],
       ),
     );

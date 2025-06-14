@@ -8,7 +8,6 @@ import '../../presentation/home/ui/home.dart';
 import '../../presentation/trips/ui/explore.dart';
 import '../../presentation/common/bottombar_item.dart';
 import '../../presentation/common/drawer.dart';
-import 'home.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({super.key});

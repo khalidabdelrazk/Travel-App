@@ -8,7 +8,13 @@ import '../../../../core/error/failures.dart';
 class HomeTripsUseCase {
   final HomeTripsRepository homeTripsRepository;
   HomeTripsUseCase({required this.homeTripsRepository});
-  Future<Either<Failures, List<HomeTripsResponseEntity>>> invoke() {
-    return homeTripsRepository.getTrips();
+  Future<Either<Failures, List<HomeTripsResponseEntity>>> invoke() async {
+    final result = await homeTripsRepository.getTrips();
+
+    return result.fold((failure) => Left(failure), (trips) {
+      final filteredTrips =
+          trips.where((trip) => num.parse(trip.rating ?? "0") >= 4).toList();
+      return Right(filteredTrips);
+    });
   }
 }
