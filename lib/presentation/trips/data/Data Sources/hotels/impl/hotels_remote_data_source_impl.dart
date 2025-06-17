@@ -27,8 +27,8 @@ class HotelsRemoteDataSourceImpl implements HotelsRemoteDataSource {
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
         final response = await apiManager.getData(
-          endPoints: ApiEndPoints.getHotels,
-          queryParams: queryParams,
+          path: ApiEndPoints.getHotels,
+          queryParameters: queryParams,
         );
 
         if (response.statusCode! >= 200 && response.statusCode! < 300) {

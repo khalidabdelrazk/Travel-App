@@ -27,8 +27,8 @@ class TripsRemoteDataSourceImpl implements TripsRemoteDataSource {
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
         final response = await apiManager.getData(
-          endPoints: ApiEndPoints.getTrips,
-          queryParams: queryParams,
+          path: ApiEndPoints.getTrips,
+          queryParameters: queryParams,
         );
 
         if (response.statusCode! >= 200 && response.statusCode! < 300) {

@@ -75,6 +75,17 @@ import '../../presentation/trips/domain/Use%20Case/hotels_use_case.dart'
 import '../../presentation/trips/domain/Use%20Case/trips_use_case.dart'
     as _i940;
 import '../../presentation/trips/ui/cubit/explore_view_model.dart' as _i821;
+import '../../presentation/wishlist/data/Data%20Sources/trips/impl/wishlist_remote_data_source_impl.dart'
+    as _i499;
+import '../../presentation/wishlist/data/Data%20Sources/trips/wishlist_remote_data_source.dart'
+    as _i548;
+import '../../presentation/wishlist/data/Repository/wishlist_repository_impl.dart'
+    as _i91;
+import '../../presentation/wishlist/domain/Repository/wishlist_repository.dart'
+    as _i398;
+import '../../presentation/wishlist/domain/Use%20Case/wishlist_use_case.dart'
+    as _i180;
+import '../../presentation/wishlist/ui/cubit/wishlist_view_model.dart' as _i889;
 import '../api%20manager/api_manager.dart' as _i949;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -102,6 +113,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i765.ChatbotRepository>(
       () => _i62.ChatbotRepositoryImpl(gh<_i623.ChatbotDataSource>()),
     );
+    gh.factory<_i548.WishlistRemoteDataSource>(
+      () => _i499.WishlistRemoteDataSourceImpl(
+        apiManager: gh<_i949.ApiManager>(),
+      ),
+    );
+    gh.factory<_i398.WishlistRepository>(
+      () => _i91.WishlistRepositoryImpl(gh<_i548.WishlistRemoteDataSource>()),
+    );
     gh.factory<_i569.HomeTripsRemoteDataSource>(
       () => _i863.HomeTripsRemoteDataSourceImpl(
         apiManager: gh<_i949.ApiManager>(),
@@ -114,6 +133,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i583.HomeTripsRepository>(
       () =>
           _i1011.HomeTripsRepositoryImpl(gh<_i569.HomeTripsRemoteDataSource>()),
+    );
+    gh.factory<_i180.WishlistUseCase>(
+      () => _i180.WishlistUseCase(
+        wishlistRepository: gh<_i398.WishlistRepository>(),
+      ),
     );
     gh.factory<_i241.HomeTripsUseCase>(
       () => _i241.HomeTripsUseCase(
@@ -139,6 +163,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i471.AuthRepository>(
       () => _i659.AuthRepositoryImpl(
         authRemoteDataSource: gh<_i293.AuthRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i889.WishlistViewModel>(
+      () => _i889.WishlistViewModel(
+        wishlistUseCase: gh<_i180.WishlistUseCase>(),
+        tripDetailsUseCase: gh<_i536.TripDetailsUseCase>(),
       ),
     );
     gh.factory<_i46.HomeViewModel>(

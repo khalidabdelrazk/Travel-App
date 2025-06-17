@@ -1,9 +1,9 @@
-import 'package:travel/presentation/explore%20details/domain/Entity/add_to_fav_response_entity.dart';
+import 'package:travel/presentation/explore%20details/domain/Entity/fav_response_entity.dart';
 
-class AddToFavResponseDm extends AddToFavResponseEntity {
-  AddToFavResponseDm({super.message, super.wishlist, super.err});
+class FavResponseDm extends FavResponseEntity {
+  FavResponseDm({super.message, super.wishlist, super.err});
 
-  AddToFavResponseDm.fromJson(dynamic json) {
+  FavResponseDm.fromJson(dynamic json) {
     message = json['message'];
     wishlist = json['wishlist'] != null ? json['wishlist'].cast<String>() : [];
     err = json['err'] != null ? ErrDm.fromJson(json['err']) : null;

@@ -37,7 +37,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
         var response = await apiManager.postData(
-          path: ApiConstants.baseUrl + ApiEndPoints.register,
+          path: ApiEndPoints.register,
           data: {
             "name": name,
             "email": email,
@@ -80,7 +80,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
         var response = await apiManager.postData(
-          path: ApiConstants.baseUrl + ApiEndPoints.login,
+          path: ApiEndPoints.login,
           data: {"email": email, "password": password},
           options: Options(
             headers: {"Content-Type": "application/json"},

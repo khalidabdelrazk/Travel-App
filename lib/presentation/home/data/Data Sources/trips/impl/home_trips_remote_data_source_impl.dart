@@ -20,7 +20,7 @@ class HomeTripsRemoteDataSourceImpl implements HomeTripsRemoteDataSource {
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
         final response = await apiManager.getData(
-          endPoints: ApiEndPoints.getTrips,
+          path: ApiEndPoints.getTrips,
         );
 
         if (response.statusCode! >= 200 && response.statusCode! < 300) {

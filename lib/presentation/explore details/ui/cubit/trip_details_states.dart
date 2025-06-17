@@ -1,10 +1,10 @@
-import 'package:travel/presentation/explore%20details/domain/Entity/add_to_fav_response_entity.dart';
+import 'package:travel/presentation/explore%20details/domain/Entity/fav_response_entity.dart';
 
 abstract class TripDetailsStates{}
 class DetailsInitState extends TripDetailsStates{}
 class DetailsLoadingState extends TripDetailsStates{}
 class DetailsSuccessState extends TripDetailsStates{
-  AddToFavResponseEntity response;
+  FavResponseEntity response;
   DetailsSuccessState({required this.response});
 }
 class DetailsErrorState extends TripDetailsStates{

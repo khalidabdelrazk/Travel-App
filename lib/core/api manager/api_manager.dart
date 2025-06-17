@@ -7,12 +7,20 @@ class ApiManager {
   final Dio dio = Dio();
 
   Future<Response> getData({
-    required String endPoints,
-    Map<String, dynamic>? queryParams,
+    required String path,
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    void Function(int, int)? onReceiveProgress,
   }) async {
     return dio.get(
-      ApiConstants.baseUrl + endPoints,
-      queryParameters: queryParams,
+      path,
+      queryParameters: queryParameters,
+      data: data,
+      options: options,
+      cancelToken: cancelToken,
+      onReceiveProgress: onReceiveProgress,
     );
   }
 
@@ -32,7 +40,23 @@ class ApiManager {
       data: data,
       cancelToken: cancelToken,
       onReceiveProgress: onReceiveProgress,
-      onSendProgress: onSendProgress
+      onSendProgress: onSendProgress,
+    );
+  }
+
+  Future<Response> deleteData({
+    required String path,
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+  }) async {
+    return dio.delete(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:either_dart/either.dart';
 import '../../../../../core/error/failures.dart';
-import '../../domain/Entity/add_to_fav_response_entity.dart';
+import '../Models/fav_response_dm.dart';
 
 abstract class TripDetailsRemoteDataSource {
-  Future<Either<Failures, AddToFavResponseEntity>> addToFav(
+  Future<Either<Failures, FavResponseDm>> fav(
     String? tripId, bool setFav
   );
 }

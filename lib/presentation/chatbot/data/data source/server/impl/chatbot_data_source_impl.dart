@@ -25,13 +25,8 @@ class ChatbotDataSourceImpl implements ChatbotDataSource {
       // Post body format
       final body = {"message": controllerText};
 
-      // final response = await apiManager.postData(
-      //   baseurl: ApiConstants.chatbotUrl,
-      //   endPoints: ApiEndPoints.chatbot, // Adjust if needed
-      //   data: body,
-      // );
       final response = await apiManager.postData(
-        path: ApiConstants.chatbotUrl + ApiEndPoints.chatbot,
+        path: ApiEndPoints.chatbot,
         data: body,
       );
 

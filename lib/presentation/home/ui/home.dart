@@ -13,8 +13,7 @@ import '../../common/notification_box.dart';
 import '../../common/popular_item.dart';
 
 class HomePage extends StatefulWidget {
-  final Function(bool, int) onTap;
-  const HomePage({super.key, required this.onTap});
+  const HomePage({super.key});
 
   @override
   HomePageState createState() => HomePageState();

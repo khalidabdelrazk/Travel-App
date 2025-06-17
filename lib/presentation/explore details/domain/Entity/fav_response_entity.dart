@@ -1,7 +1,7 @@
-class AddToFavResponseEntity {
-  AddToFavResponseEntity({this.message, this.wishlist, this.err});
+class FavResponseEntity {
+  FavResponseEntity({this.message, this.wishlist, this.err});
 
-  AddToFavResponseEntity.fromJson(dynamic json) {
+  FavResponseEntity.fromJson(dynamic json) {
     message = json['message'];
     wishlist = json['wishlist'] != null ? json['wishlist'].cast<String>() : [];
     err = json['err'] != null ? ErrEntity.fromJson(json['err']) : null;

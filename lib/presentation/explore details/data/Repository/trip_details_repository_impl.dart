@@ -4,7 +4,7 @@ import 'package:travel/presentation/explore%20details/data/Data%20Sources/trip_d
 import 'package:travel/presentation/explore%20details/domain/Repository/trip_details_repository.dart';
 import 'package:travel/presentation/trips/domain/Repository/explore_repository.dart';
 import '../../../../../../core/error/failures.dart';
-import '../../domain/Entity/add_to_fav_response_entity.dart';
+import '../../domain/Entity/fav_response_entity.dart';
 
 @Injectable(as: TripDetailsRepository)
 class TripDetailsRepositoryImpl extends TripDetailsRepository {
@@ -14,10 +14,10 @@ class TripDetailsRepositoryImpl extends TripDetailsRepository {
   );
 
   @override
-  Future<Either<Failures, AddToFavResponseEntity>> addToFav(
+  Future<Either<Failures, FavResponseEntity>> fav(
     String? tripId, bool setFav
   ) async {
-    var either = await tripDetailsRemoteDataSource.addToFav(tripId,setFav);
+    var either = await tripDetailsRemoteDataSource.fav(tripId,setFav);
     return either.fold((error) => Left(error), (response) => Right(response));
   }
 

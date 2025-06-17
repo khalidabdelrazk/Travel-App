@@ -3,11 +3,11 @@ import 'package:travel/core/utils/data.dart';
 import '../../core/model/places.dart';
 import '../../core/theme/color.dart';
 import '../../core/utils/constant.dart';
-import '../../presentation/explore details/ui/explore_details.dart';
 import '../../presentation/home/ui/home.dart';
 import '../../presentation/trips/ui/explore.dart';
 import '../../presentation/common/bottombar_item.dart';
 import '../../presentation/common/drawer.dart';
+import '../../presentation/wishlist/ui/wishlist.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({super.key});
@@ -17,7 +17,7 @@ class RootApp extends StatefulWidget {
 }
 
 class RootAppState extends State<RootApp> with TickerProviderStateMixin {
-  int activeTab = 1;
+  int activeTab = 0;
   bool showFloatingActionButton = true;
   Place popular = places[0];
 
@@ -46,24 +46,22 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
 
   List<Map<String, dynamic>> get barItems => [
     {
+      "icon": "assets/icons/home.svg",
+      "active_icon": "assets/icons/home.svg",
+      "page": HomePage(),
+      "title": "Home",
+    },
+    {
       "icon": "assets/icons/navigation.svg",
       "active_icon": "assets/icons/navigation.svg",
       "page": ExplorePage(),
       "title": "Explore",
     },
     {
-      "icon": "assets/icons/home.svg",
-      "active_icon": "assets/icons/home.svg",
-      "page": HomePage(
-        onTap: (p0, myIndex) => onTap(p0, myIndex),
-      ),
-      "title": "Home",
-    },
-    {
-      "icon": "assets/icons/settings.svg",
-      "active_icon": "assets/icons/settings.svg",
-      "page": Container(),
-      "title": "Test",
+      "icon": "assets/icons/wishlist.svg",
+      "active_icon": "assets/icons/wishlist.svg",
+      "page": Wishlist(),
+      "title": "Wishlist",
     },
   ];
 
@@ -137,7 +135,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: List.generate(
-          2,
+          barItems.length,
           (index) => BottomBarItem(
             activeTab == index
                 ? barItems[index]["active_icon"]

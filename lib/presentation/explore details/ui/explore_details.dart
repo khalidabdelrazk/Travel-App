@@ -87,7 +87,7 @@ class _ExploreDetailsState extends State<ExploreDetails> {
       listener: (context, state) {
         if (state is DetailsSuccessState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Added to favorites!")),
+            SnackBar(content: Text(state.response.message!)),
           );
         } else if (state is DetailsErrorState) {
           DialogUtils.showMessage(context: context, message: 'Error: ${state.errorMessage}');
