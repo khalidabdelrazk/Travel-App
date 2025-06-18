@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel/presentation/explore%20details/data/Models/fav_response_dm.dart';
-import '../../../../../../../core/api manager/api_endpints.dart';
+import '../../../../../../../core/api manager/api_endpoints.dart';
 import '../../../../../../../core/api manager/api_manager.dart';
 import '../../../../../../../core/error/failures.dart';
 import '../../../../../core/utils/shared_pref_services.dart';

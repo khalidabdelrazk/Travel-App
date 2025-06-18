@@ -31,26 +31,32 @@ class _SplashScreenState extends State<SplashScreen> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/images/Travel.png"),
+              Image.asset(
+                "assets/images/Travel.png",
+                color: Theme.of(context).primaryColor,
+              ),
               SizedBox(width: width * 0.03),
-              Image.asset("assets/images/globe icon.png"),
+              Image.asset(
+                "assets/images/globe icon.png",
+                color: Theme.of(context).primaryColor,
+              ),
             ],
           ),
           SizedBox(height: height * 0.04),
           Text(
             "Find Your Dream",
-            style: TextStyle(color: Colors.white, fontSize: 18),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           Text(
             "Destination With Us",
-            style: TextStyle(color: Colors.white, fontSize: 18),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],
       ),

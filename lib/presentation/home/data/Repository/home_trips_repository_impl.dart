@@ -20,4 +20,10 @@ class HomeTripsRepositoryImpl extends HomeTripsRepository {
     var either = await homeTripsRemoteDataSource.getTrips();
     return either.fold((error) => Left(error), (response) => Right(response));
   }
+
+  @override
+  Future<Either<Failures, List<HomeTripsResponseEntity>>> getCategoryTrips(String queryParams) async{
+    var either = await homeTripsRemoteDataSource.getCategoryTrips(queryParams);
+    return either.fold((error) => Left(error), (response) => Right(response));
+  }
 }

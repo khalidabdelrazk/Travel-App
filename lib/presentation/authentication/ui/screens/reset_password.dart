@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/common/custom_button.dart';
+import '../../../../core/common/custom_text_field.dart';
+import '../../../../core/common/dialog_utils.dart';
 import '../../../../core/di/di.dart';
-import '../../../common/custom_button.dart';
-import '../../../common/custom_text_field.dart';
-import '../../../common/dialog_utils.dart';
+
+import '../../../../core/routes/route_names.dart';
 import '../cubit/authentication/auth_states.dart';
 import '../cubit/authentication/auth_view_model.dart';
 
@@ -32,27 +34,37 @@ class _ResetPasswordState extends State<ResetPassword> {
           DialogUtils.showMessage(
             context: context,
             message: state.errorMessage,
-            title: "Failed to Reset Password",
+            title: state.errorMessage,
             posActionName: 'Ok',
           );
         } else if (state is SuccessState) {
           DialogUtils.hideLoading(context);
           DialogUtils.showMessage(
             context: context,
-            message: 'Password Reset Successfully\n${state.response.message}',
+            message: 'Password Reset Successfully',
             title: "Success",
             posActionName: 'Ok',
+            posAction: () {
+              Navigator.pushReplacementNamed(context, RouteNames.login);
+            },
           );
         }
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
+          surfaceTintColor: Theme.of(context).cardColor,
+          backgroundColor: Theme.of(context).cardColor,
+          elevation: 6,
+          shadowColor: Colors.black.withOpacity(0.1),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
+          ),
           centerTitle: true,
-          title: Text("Forget Password", style: TextTheme.of(context).titleMedium),
-          elevation: 0,
-          forceMaterialTransparency: true,
-          foregroundColor: Colors.transparent,
+          title: Text(
+            "Forget Password",
+            style: TextTheme.of(context).titleMedium,
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -81,9 +93,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                     maxLines: 1,
                     keyboardType: TextInputType.visiblePassword,
                     prefixIcon: Icons.lock_outline,
-                    suffixIcon: hidePassword
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
+                    suffixIcon:
+                        hidePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
                     onSuffixPressed: () {
                       setState(() {
                         hidePassword = !hidePassword;

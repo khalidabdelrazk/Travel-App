@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:travel/core/utils/shared_pref_services.dart';
 import '../../../../../../../core/api manager/api_manager.dart';
 import '../../../../../../../core/error/failures.dart';
-import '../../../../../../core/api manager/api_endpints.dart';
+import '../../../../../../core/api manager/api_endpoints.dart';
 import '../../../Models/wishlist_response_dm.dart';
 import '../wishlist_remote_data_source.dart';
 

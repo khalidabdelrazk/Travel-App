@@ -1,7 +1,7 @@
-import 'package:travel/presentation/trips/domain/Entity/trips_response_entity.dart';
+import 'package:travel/presentation/trips/domain/Entity/explore_response_entity.dart';
 
-class TripsResponseDm extends TripsResponseEntity{
-  TripsResponseDm({
+class ExploreResponseDm extends ExploreResponseEntity{
+  ExploreResponseDm({
       super.id,
       super.name,
       super.description,
@@ -9,11 +9,12 @@ class TripsResponseDm extends TripsResponseEntity{
       super.price,
       super.location,
       super.city,
-      super.createdAt,
-      super.updatedAt,
-      this.v,});
+      super.message,
+      this.v,
+      super.rating,
+      super.type,});
 
-  TripsResponseDm.fromJson(dynamic json) {
+  ExploreResponseDm.fromJson(dynamic json) {
     id = json['_id'];
     name = json['name'];
     description = json['description'];
@@ -21,11 +22,10 @@ class TripsResponseDm extends TripsResponseEntity{
     price = json['price'];
     location = json['location'];
     city = json['city'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
     v = json['__v'];
+    rating = json['rating'];
+    type = json['type'];
+    message = json['message'];
   }
-  int? v;
-
-
+  num? v;
 }

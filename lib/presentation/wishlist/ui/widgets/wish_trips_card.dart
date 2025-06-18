@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:travel/presentation/common/custom_image.dart';
-import 'package:travel/presentation/trips/domain/Entity/trips_response_entity.dart';
+import '../../../../core/common/custom_image.dart';
+import '../../../trips/domain/Entity/explore_response_entity.dart';
 
 class WishTripsCard extends StatelessWidget {
   const WishTripsCard({
@@ -11,7 +11,7 @@ class WishTripsCard extends StatelessWidget {
     required this.onFavTap,
   });
 
-  final TripsResponseEntity trip;
+  final ExploreResponseEntity trip;
   final VoidCallback onPress;
   final VoidCallback onFavTap;
 

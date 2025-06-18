@@ -1,11 +1,11 @@
 import 'package:travel/presentation/authentication/Domain/Entity/register_response_entity.dart';
 
 class RegisterResponseDm extends RegisterResponseEntity{
-  RegisterResponseDm({super.success, super.userData, super.error});
+  RegisterResponseDm({super.success, super.userData, super.message});
 
   RegisterResponseDm.fromJson(dynamic json) {
     success = json['success'];
-    error = json['error'];
+    message = json['error'];
     userData =
         json['userData'] != null ? UserData.fromJson(json['userData']) : null;
   }

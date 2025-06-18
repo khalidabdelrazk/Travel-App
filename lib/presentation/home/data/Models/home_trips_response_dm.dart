@@ -1,18 +1,18 @@
 import 'package:travel/presentation/home/domain/Entity/trips_response_entity.dart';
-import 'package:travel/presentation/trips/domain/Entity/trips_response_entity.dart';
 
 class HomeTripsResponseDm extends HomeTripsResponseEntity{
   HomeTripsResponseDm({
-      super.id,
-      super.name,
-      super.description,
-      super.photos,
-      super.price,
-      super.location,
-      super.city,
-      super.createdAt,
-      super.updatedAt,
-      this.v,});
+    super.id,
+    super.name,
+    super.description,
+    super.photos,
+    super.price,
+    super.location,
+    super.city,
+    this.v,
+    super.message,
+    super.rating,
+    super.type,});
 
   HomeTripsResponseDm.fromJson(dynamic json) {
     id = json['_id'];
@@ -22,11 +22,13 @@ class HomeTripsResponseDm extends HomeTripsResponseEntity{
     price = json['price'];
     location = json['location'];
     city = json['city'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
     v = json['__v'];
+    rating = json['rating'];
+    type = json['type'];
+    message = json['message'];
   }
-  int? v;
+  num? v;
+
 
 
 }

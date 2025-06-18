@@ -12,7 +12,6 @@ class WishlistViewModel extends Cubit<WishListStates> {
   final TripDetailsUseCase tripDetailsUseCase;
   List<WishlistResponseEntity> wishlist = [];
 
-
   WishlistViewModel({
     required this.wishlistUseCase,
     required this.tripDetailsUseCase,
@@ -21,28 +20,26 @@ class WishlistViewModel extends Cubit<WishListStates> {
   Future<void> getWishlist() async {
     emit(LoadingState());
     var either = await wishlistUseCase.invoke();
-    either.fold(
-      (left) => emit(ErrorState(errorMessage: left.errorMessage)),
-      (right) {
-        wishlist = right;
-        emit(SuccessState());
-      },
-    );
+    either.fold((left) => emit(ErrorState(errorMessage: left.errorMessage)), (
+      right,
+    ) {
+      wishlist = right;
+      emit(SuccessState());
+    });
   }
 
   Future<void> removeFromWishList(String tripId) async {
     final either = await tripDetailsUseCase.invoke(tripId, false);
-    either.fold(
-          (left) => emit(ErrorState(errorMessage: left.errorMessage)),
-          (right) {
-            if(wishlist.length == 1){
-              wishlist.removeWhere((trip) => trip.id == tripId);
-              getWishlist();
-              return;
-            }
+    either.fold((left) => emit(ErrorState(errorMessage: left.errorMessage)), (
+      right,
+    ) async {
+      if (wishlist.length == 1) {
         wishlist.removeWhere((trip) => trip.id == tripId);
-        emit(SuccessState());
-      },
-    );
+        await getWishlist();
+        return;
+      }
+      wishlist.removeWhere((trip) => trip.id == tripId);
+      emit(SuccessState());
+    });
   }
 }

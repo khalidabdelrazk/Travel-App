@@ -2,6 +2,7 @@ class LoginResponseEntity {
   LoginResponseEntity({
     this.success,
     this.token,
+    this.isAdmin,
     this.name,});
 
   LoginResponseEntity.fromJson(dynamic json) {
@@ -14,5 +15,6 @@ class LoginResponseEntity {
   String? token;
   String? name;
   String? message;
+  bool? isAdmin;
 
 }

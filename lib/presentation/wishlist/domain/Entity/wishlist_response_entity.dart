@@ -1,6 +1,6 @@
-import 'package:travel/presentation/trips/domain/Entity/trips_response_entity.dart';
+import 'package:travel/presentation/trips/domain/Entity/explore_response_entity.dart';
 
-class WishlistResponseEntity extends TripsResponseEntity {
+class WishlistResponseEntity extends ExploreResponseEntity {
   WishlistResponseEntity({
     super.id,
     super.name,
@@ -9,8 +9,8 @@ class WishlistResponseEntity extends TripsResponseEntity {
     super.price,
     super.location,
     super.city,
-    super.createdAt,
-    super.updatedAt,
     super.rating,
+    super.type,
+    super.message,
   });
 }

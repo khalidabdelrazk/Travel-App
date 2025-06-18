@@ -12,6 +12,18 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../presentation/administrator/data/Data%20Sources/administrator_remote_data_source.dart'
+    as _i631;
+import '../../presentation/administrator/data/Data%20Sources/impl/administrator_remote_data_source_impl.dart'
+    as _i875;
+import '../../presentation/administrator/data/Repository/administrator_repository_impl.dart'
+    as _i577;
+import '../../presentation/administrator/domain/Repository/administrator_repository.dart'
+    as _i692;
+import '../../presentation/administrator/domain/Use%20Case/administrator_use_case.dart'
+    as _i825;
+import '../../presentation/administrator/ui/cubit/administrator_view_model.dart'
+    as _i796;
 import '../../presentation/authentication/Data/Data%20Sources/remote/auth_remote_data_source.dart'
     as _i293;
 import '../../presentation/authentication/Data/Data%20Sources/remote/impl/auth_remote_data_source_impl.dart'
@@ -55,6 +67,8 @@ import '../../presentation/home/data/Repository/home_trips_repository_impl.dart'
     as _i1011;
 import '../../presentation/home/domain/Repository/home_repository.dart'
     as _i583;
+import '../../presentation/home/domain/Use%20Case/category_use_case.dart'
+    as _i712;
 import '../../presentation/home/domain/Use%20Case/home_trips_use_case.dart'
     as _i241;
 import '../../presentation/home/ui/cubit/home_view_model.dart' as _i46;
@@ -107,6 +121,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i293.AuthRemoteDataSource>(
       () => _i1054.AuthRemoteDataSourceImpl(apiManager: gh<_i949.ApiManager>()),
     );
+    gh.factory<_i631.AdministratorRemoteDataSource>(
+      () => _i875.AdministratorRemoteDataSourceImpl(
+        apiManager: gh<_i949.ApiManager>(),
+      ),
+    );
     gh.factory<_i623.ChatbotDataSource>(
       () => _i336.ChatbotDataSourceImpl(apiManager: gh<_i949.ApiManager>()),
     );
@@ -130,6 +149,11 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i634.HotelsRemoteDataSourceImpl(apiManager: gh<_i949.ApiManager>()),
     );
+    gh.factory<_i692.AdministratorRepository>(
+      () => _i577.AdministratorRepositoryImpl(
+        gh<_i631.AdministratorRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i583.HomeTripsRepository>(
       () =>
           _i1011.HomeTripsRepositoryImpl(gh<_i569.HomeTripsRemoteDataSource>()),
@@ -137,6 +161,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i180.WishlistUseCase>(
       () => _i180.WishlistUseCase(
         wishlistRepository: gh<_i398.WishlistRepository>(),
+      ),
+    );
+    gh.factory<_i712.CategoryUseCase>(
+      () => _i712.CategoryUseCase(
+        homeTripsRepository: gh<_i583.HomeTripsRepository>(),
       ),
     );
     gh.factory<_i241.HomeTripsUseCase>(
@@ -149,9 +178,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i720.TripDetailsRemoteDataSource>(),
       ),
     );
+    gh.factory<_i46.HomeViewModel>(
+      () => _i46.HomeViewModel(
+        homeTripsUseCase: gh<_i241.HomeTripsUseCase>(),
+        categoryUseCase: gh<_i712.CategoryUseCase>(),
+      ),
+    );
     gh.factory<_i536.TripDetailsUseCase>(
       () => _i536.TripDetailsUseCase(
         tripDetailsRepository: gh<_i91.TripDetailsRepository>(),
+      ),
+    );
+    gh.factory<_i825.AdministratorUseCase>(
+      () => _i825.AdministratorUseCase(
+        administratorRepository: gh<_i692.AdministratorRepository>(),
       ),
     );
     gh.factory<_i1012.ExploreRepository>(
@@ -171,9 +211,6 @@ extension GetItInjectableX on _i174.GetIt {
         tripDetailsUseCase: gh<_i536.TripDetailsUseCase>(),
       ),
     );
-    gh.factory<_i46.HomeViewModel>(
-      () => _i46.HomeViewModel(homeTripsUseCase: gh<_i241.HomeTripsUseCase>()),
-    );
     gh.factory<_i959.ChatbotUseCases>(
       () => _i959.ChatbotUseCases(
         chatbotRepository: gh<_i765.ChatbotRepository>(),
@@ -182,16 +219,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i719.TripDetailsViewModel>(
       () => _i719.TripDetailsViewModel(
         tripDetailsUseCase: gh<_i536.TripDetailsUseCase>(),
+        wishlistUseCase: gh<_i180.WishlistUseCase>(),
       ),
     );
-    gh.factory<_i940.TripsUseCase>(
-      () =>
-          _i940.TripsUseCase(exploreRepository: gh<_i1012.ExploreRepository>()),
+    gh.factory<_i796.AdministratorViewModel>(
+      () => _i796.AdministratorViewModel(
+        administratorUseCase: gh<_i825.AdministratorUseCase>(),
+      ),
     );
     gh.factory<_i514.HotelsUseCase>(
       () => _i514.HotelsUseCase(
         exploreRepository: gh<_i1012.ExploreRepository>(),
       ),
+    );
+    gh.factory<_i940.TripsUseCase>(
+      () =>
+          _i940.TripsUseCase(exploreRepository: gh<_i1012.ExploreRepository>()),
     );
     gh.factory<_i1069.ChatBotViewModel>(
       () =>

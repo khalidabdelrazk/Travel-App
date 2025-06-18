@@ -1,16 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel/core/utils/shared_pref_services.dart';
 import 'package:travel/presentation/home/ui/cubit/home_states.dart';
 import 'package:travel/presentation/home/ui/cubit/home_view_model.dart';
-
+import 'package:travel/presentation/home/ui/widgets/section_with_popular_item.dart';
+import '../../../core/common/category_item.dart';
+import '../../../core/common/popular_item.dart';
 import '../../../core/di/di.dart';
 import '../../../core/theme/color.dart';
 import '../../../core/utils/data.dart';
-import '../../common/category_item.dart';
-import '../../common/notification_box.dart';
-import '../../common/popular_item.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,6 +25,10 @@ class HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     homeViewModel.getTrips();
+    homeViewModel.getCategoryTrips("beach");
+    homeViewModel.getCategoryTrips("mountain");
+    homeViewModel.getCategoryTrips("ancient");
+    homeViewModel.getCategoryTrips("wonder");
   }
 
   late double height;
@@ -35,51 +38,30 @@ class HomePageState extends State<HomePage> {
     height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: CustomScrollView(
-        slivers: [
-          // SliverAppBar(
-          //   backgroundColor: appBarColor,
-          //   pinned: true,
-          //   snap: true,
-          //   floating: true,
-          //   title: getAppBar(),
-          // ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => buildBody(),
-              childCount: 1,
+      body: ListView(
+        children: [
+          const SizedBox(height: 25),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 25),
+            child: Text(
+              "Most Popular",
+              style: TextTheme.of(context).headlineLarge,
             ),
           ),
+          getPopulars(),
+          const SizedBox(height: 25),
+          getCategory("beach"),
+          const SizedBox(height: 25),
+
+          getCategory("mountain"),
+          const SizedBox(height: 25),
+
+          getCategory("ancient"),
+          const SizedBox(height: 25),
+
+          getCategory("wonder"),
+          const SizedBox(height: 77),
         ],
-      ),
-    );
-  }
-
-
-  buildBody() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 0, bottom: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 25),
-            Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: getCategories(),
-            ),
-            SizedBox(height: 25),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 0, 15, 25),
-              child: Text(
-                "Most Popular",
-                style: TextTheme.of(context).headlineLarge,
-              ),
-            ),
-            getPopulars(),
-            SizedBox(height: 25),
-          ],
-        ),
       ),
     );
   }
@@ -101,29 +83,20 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget getPopulars() {
-    return BlocBuilder(
+    return BlocBuilder<HomeViewModel, HomeStates>(
       bloc: homeViewModel,
       builder: (context, state) {
-        if (state is LoadingState) {
+        if (homeViewModel.mostPopTrips.isEmpty) {
           return SizedBox(
-            height: height*0.4, // Matches the height of the CarouselSlider
-            child: Center(child: CircularProgressIndicator()),
+            height: height * 0.4,
+            child: const Center(child: CircularProgressIndicator()),
           );
         } else if (state is ErrorState) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(state.errorMessage, style: Theme.of(context).textTheme.labelLarge),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () => homeViewModel.getTrips(),
-                  child: const Text('Try Again'),
-                ),
-              ],
-            ),
+          return onError(
+            errorMessage: state.errorMsg,
+            onPressed: homeViewModel.getTrips,
           );
-        } else if (state is SuccessState) {
+        } else {
           return CarouselSlider(
             options: CarouselOptions(
               height: 370,
@@ -132,18 +105,63 @@ class HomePageState extends State<HomePage> {
               viewportFraction: .75,
             ),
             items: List.generate(
-              state.response.length,
-              (index) => GestureDetector(
-                onTap: () {
-                  // Navigator.pushNamed(context, RouteNames.tripDetails,arguments: populars[index]);
-                },
-                child: PopularItem(data: state.response[index], onTap: () {}),
+              homeViewModel.mostPopTrips.length,
+              (index) => SizedBox(
+                height: 370,
+                child: PopularItem(
+                  data: homeViewModel.mostPopTrips[index],
+                  onTap: () {},
+                ),
               ),
             ),
           );
         }
-        return Container(color: Colors.red, width: 40, height: 40);
       },
+    );
+  }
+
+  Widget getCategory(String queryParams) {
+    return BlocBuilder<HomeViewModel, HomeStates>(
+      bloc: homeViewModel,
+      buildWhen: (previous, current) {
+        if (current is CategoryLoading || current is CategorySuccess) {
+          return (current is CategoryLoading &&
+                  current.category == queryParams) ||
+              (current is CategorySuccess && current.category == queryParams);
+        }
+        return false;
+      },
+      builder: (context, state) {
+        if (homeViewModel.categories[queryParams]!.isEmpty) {
+          return SizedBox(
+            height: height * 0.4,
+            child: const Center(child: CircularProgressIndicator()),
+          );
+        } else if (state is ErrorState) {
+          return onError(
+            errorMessage: state.errorMsg,
+            onPressed: homeViewModel.getTrips,
+          );
+        } else {
+          return SectionWithPopularItems(
+            title: queryParams,
+            items: homeViewModel.categories[queryParams] ?? [],
+          );
+        }
+      },
+    );
+  }
+
+  Widget onError({required String errorMessage, VoidCallback? onPressed}) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(errorMessage, style: Theme.of(context).textTheme.labelLarge),
+          const SizedBox(height: 10),
+          ElevatedButton(onPressed: onPressed, child: const Text('Try Again')),
+        ],
+      ),
     );
   }
 }

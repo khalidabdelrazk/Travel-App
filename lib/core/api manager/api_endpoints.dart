@@ -8,6 +8,8 @@ abstract class ApiEndPoints {
   static const login = '${ApiConstants.baseUrl}/user/login';
   static const resetPassword = '${ApiConstants.baseUrl}/user/forgotpass';
   static const getWishlist = '${ApiConstants.baseUrl}/trip/wishlist';
+  static const postTrip = '${ApiConstants.baseUrl}/trip/addtrip';
+  static const postHotel = '${ApiConstants.baseUrl}/hotel';
   static String setFav(String tripId) =>
       "${ApiConstants.baseUrl}/user/addwishlist/$tripId";
   static String notFav(String tripId) =>

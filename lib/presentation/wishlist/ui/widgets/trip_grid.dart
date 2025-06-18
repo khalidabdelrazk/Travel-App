@@ -1,15 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travel/core/di/di.dart';
+import 'package:travel/presentation/wishlist/ui/cubit/wishlist_view_model.dart';
 import 'package:travel/presentation/wishlist/ui/widgets/wish_trips_card.dart';
 
 import '../../../../core/routes/route_names.dart';
-import '../../../trips/domain/Entity/trips_response_entity.dart';
+import '../../../trips/domain/Entity/explore_response_entity.dart';
 
 class TripsGrid extends StatelessWidget {
-  final List<TripsResponseEntity> trips;
+  final List<ExploreResponseEntity> trips;
   final void Function(String id) onFavTap;
 
-  const TripsGrid({super.key, required this.trips, required this.onFavTap});
+  TripsGrid({super.key, required this.trips, required this.onFavTap});
+
+  WishlistViewModel wishlistViewModel = getIt<WishlistViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +47,16 @@ class TripsGrid extends StatelessWidget {
                       ),
                       child: WishTripsCard(
                         trip: trip,
-                        onPress: () {
-                          Navigator.pushNamed(
+                        onPress: () async {
+                          final result = await Navigator.pushNamed(
                             context,
                             RouteNames.exploreDetails,
                             arguments: trip,
                           );
+
+                          if (result == true) {
+                            wishlistViewModel.getWishlist();
+                          }
                         },
                         onFavTap: () => onFavTap(trip.id!),
                       ),

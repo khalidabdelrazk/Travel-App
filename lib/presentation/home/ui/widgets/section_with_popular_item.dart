@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+
+import '../../../../core/common/popular_item.dart';
+import '../../domain/Entity/trips_response_entity.dart';
+
+class SectionWithPopularItems extends StatelessWidget {
+  final String title;
+  final VoidCallback? onSeeMore;
+  final List<HomeTripsResponseEntity> items;
+
+  const SectionWithPopularItems({
+    super.key,
+    required this.title,
+    required this.items,
+    this.onSeeMore,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Title and See More Row
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Text(
+            title.toUpperCase(),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ),
+
+        const SizedBox(height: 14),
+
+        // Horizontal List of Popular Items
+        SizedBox(
+          height: 220,
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            scrollDirection: Axis.horizontal,
+            itemCount: items.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemBuilder: (context, index) {
+              return PopularItem(data: items[index], onTap: () {},height: 220,width: 200,);
+            },
+          ),
+        ),
+        // SizedBox(height: 77),
+
+      ],
+    );
+  }
+}

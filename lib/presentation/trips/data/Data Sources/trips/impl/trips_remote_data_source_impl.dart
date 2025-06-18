@@ -1,10 +1,10 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../../../../core/api manager/api_endpints.dart';
+import 'package:travel/presentation/trips/data/Models/explore_response_dm.dart';
+import '../../../../../../../core/api manager/api_endpoints.dart';
 import '../../../../../../../core/api manager/api_manager.dart';
 import '../../../../../../../core/error/failures.dart';
-import '../../../../domain/Entity/trips_response_entity.dart';
 import '../trips_remote_data_source.dart';
 
 @Injectable(as: TripsRemoteDataSource)
@@ -13,7 +13,7 @@ class TripsRemoteDataSourceImpl implements TripsRemoteDataSource {
   TripsRemoteDataSourceImpl({required this.apiManager});
 
   @override
-  Future<Either<Failures, List<TripsResponseEntity>>> getTrips(
+  Future<Either<Failures, List<ExploreResponseDm>>> getTrips(
     String? controllerText,
   ) async {
     final connectivityResult = await Connectivity().checkConnectivity();
@@ -32,10 +32,11 @@ class TripsRemoteDataSourceImpl implements TripsRemoteDataSource {
         );
 
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
+          print(response.data);
           List<dynamic> jsonList = response.data;
-          List<TripsResponseEntity> trips =
+          List<ExploreResponseDm> trips =
               jsonList
-                  .map((item) => TripsResponseEntity.fromJson(item))
+                  .map((item) => ExploreResponseDm.fromJson(item))
                   .toList();
           return Right(trips);
         }

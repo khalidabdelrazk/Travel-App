@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/core/provider/theme_provider.dart';
 import 'package:travel/core/routes/route_names.dart';
 import 'package:travel/core/utils/shared_pref_services.dart';
-import 'package:travel/presentation/common/custom_button.dart';
 import '../../core/theme/color.dart';
+import 'custom_button.dart';
 
 class MyDrawer extends StatefulWidget {
   final Function(bool, int) onTap;
@@ -199,14 +200,36 @@ class _MyDrawerState extends State<MyDrawer> {
               bottom: height * 0.03,
             ),
             child: CustomButton(
-              body: Text("Logout"),
+              body: Text("Logout",style: GoogleFonts.inter(color: Colors.white),),
               color: Colors.white,
               backgroundColor: Colors.red,
               onPressed: () async{
-                await SharedPrefService.instance.clearToken();
-                Navigator.pushReplacementNamed(context, RouteNames.login);
+                _confirmLogout();
               },
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _confirmLogout() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Confirm Logout'),
+        content: const Text('Are you sure you want to log out?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async{
+              await SharedPrefService.instance.clearToken();
+              Navigator.pushReplacementNamed(context, RouteNames.login);
+            },
+            child: const Text('Logout'),
           ),
         ],
       ),

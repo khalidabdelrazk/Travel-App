@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:travel/core/utils/data.dart';
+import '../../core/common/bottombar_item.dart';
+import '../../core/common/drawer.dart';
 import '../../core/model/places.dart';
 import '../../core/theme/color.dart';
 import '../../core/utils/constant.dart';
 import '../../presentation/home/ui/home.dart';
 import '../../presentation/trips/ui/explore.dart';
-import '../../presentation/common/bottombar_item.dart';
-import '../../presentation/common/drawer.dart';
 import '../../presentation/wishlist/ui/wishlist.dart';
 
 class RootApp extends StatefulWidget {
@@ -77,8 +77,15 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.transparent,
-        elevation: 0,
+        surfaceTintColor: Theme.of(context).cardColor,
+        backgroundColor: Theme.of(context).cardColor,
+        elevation: 6,
+        shadowColor: Colors.black.withOpacity(0.1),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(24),
+          ),
+        ),
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -95,6 +102,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
         ),
         centerTitle: true,
       ),
+
       drawer: MyDrawer(onTap: (p0, p1) => onTap(p0, p1)),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: getBarPage(),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/core/di/di.dart';
-import 'package:travel/core/routes/route_names.dart';
 import 'package:travel/presentation/wishlist/ui/cubit/wishlist_states.dart';
 import 'package:travel/presentation/wishlist/ui/cubit/wishlist_view_model.dart';
 import 'package:travel/presentation/wishlist/ui/widgets/wish_trips_card.dart';
@@ -50,6 +49,7 @@ class _WishlistState extends State<Wishlist> {
               if (constraints.maxWidth > 900) crossAxisCount = 4;
 
               return GridView.builder(
+                padding: EdgeInsets.only(bottom: 70),
                 itemCount: wishlistViewModel.wishlist.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: crossAxisCount,
@@ -70,11 +70,11 @@ class _WishlistState extends State<Wishlist> {
                     child: WishTripsCard(
                       trip: trip,
                       onPress: () {
-                        Navigator.pushNamed(
-                          context,
-                          RouteNames.exploreDetails,
-                          arguments: trip,
-                        );
+                        // Navigator.pushNamed(
+                        //   context,
+                        //   RouteNames.exploreDetails,
+                        //   arguments: trip,
+                        // );
                       },
                       onFavTap: () async {
                         await wishlistViewModel.removeFromWishList(trip.id!);

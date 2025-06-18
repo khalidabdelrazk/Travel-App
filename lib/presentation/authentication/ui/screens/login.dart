@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/common/custom_button.dart';
+import '../../../../core/common/custom_text_button.dart';
+import '../../../../core/common/custom_text_field.dart';
+import '../../../../core/common/dialog_utils.dart';
 import '../../../../core/di/di.dart';
 import '../../../../core/routes/route_names.dart';
 import '../../../../core/theme/color.dart';
 import '../../../../core/utils/shared_pref_services.dart';
-import '../../../common/custom_button.dart';
-import '../../../common/custom_text_button.dart';
-import '../../../common/custom_text_field.dart';
-import '../../../common/dialog_utils.dart';
+
 import '../cubit/authentication/auth_states.dart';
 import '../cubit/authentication/auth_view_model.dart';
 
@@ -39,25 +40,29 @@ class _LoginState extends State<Login> {
           );
         } else if (state is SuccessState) {
           DialogUtils.hideLoading(context);
-          DialogUtils.showMessage(
-            context: context,
-            title: "Success",
-            message: 'Logged in successfully\nToken: ${state.response.token}',
-            posActionName: 'OK',
-            posAction: () {
-              SharedPrefService.instance.setToken(state.response.token);
-              Navigator.pushReplacementNamed(context, RouteNames.homeScreen);
-            },
-          );
+          if (state.response.isAdmin) {
+            Navigator.pushReplacementNamed(context, RouteNames.adminScreen);
+            return;
+          }
+          SharedPrefService.instance.setToken(state.response.token);
+          Navigator.pushReplacementNamed(context, RouteNames.homeScreen);
         }
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
+          surfaceTintColor: Theme.of(context).cardColor,
+          backgroundColor: Theme.of(context).cardColor,
+          elevation: 6,
+          shadowColor: Colors.black.withOpacity(0.1),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(24),
+            ),
+          ),
+          automaticallyImplyLeading: false,
           centerTitle: true,
           title: Text("Login", style: TextTheme.of(context).titleMedium),
-          elevation: 0,
-          forceMaterialTransparency: true,
-          foregroundColor: Colors.transparent,
         ),
         body: SafeArea(
           child: SingleChildScrollView(

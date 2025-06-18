@@ -5,6 +5,7 @@ class LoginResponseDm extends LoginResponseEntity{
     super.success,
     super.token,
     super.name,
+    super.isAdmin,
   });
 
   LoginResponseDm.fromJson(dynamic json) {
@@ -12,6 +13,8 @@ class LoginResponseDm extends LoginResponseEntity{
     token = json['token'];
     name = json['name'];
     message = json['message'];
+    isAdmin = json['isAdmin'];
   }
+
 }
 

@@ -1,21 +1,23 @@
 class ExploreResponseEntity {
   ExploreResponseEntity({
-    this.id,
-    this.name,
-    this.description,
-    this.city,
-    this.location,
-    this.photos,
-    this.price,
-    this.rating,
-  });
-
+      this.id, 
+      this.name, 
+      this.description, 
+      this.photos, 
+      this.price, 
+      this.location, 
+      this.city, 
+      this.rating,
+    this.message,
+      this.type,});
   String? id;
   String? name;
   String? description;
-  String? city;
-  String? location;
   List<String>? photos;
-  int? price;
-  dynamic rating;
+  num? price;
+  String? location;
+  String? city;
+  num? rating;
+  String? type;
+  String? message;
 }

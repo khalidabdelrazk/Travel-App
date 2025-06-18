@@ -1,9 +1,9 @@
 import 'package:either_dart/either.dart';
-import 'package:travel/presentation/trips/domain/Entity/trips_response_entity.dart';
 import '../../../../../../core/error/failures.dart';
+import '../../../domain/Entity/explore_response_entity.dart';
 
 abstract class TripsRemoteDataSource {
-  Future<Either<Failures, List<TripsResponseEntity>>> getTrips(
+  Future<Either<Failures, List<ExploreResponseEntity>>> getTrips(
     String? controllerText
   );
 }

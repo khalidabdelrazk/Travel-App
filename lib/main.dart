@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:travel/core/provider/theme_provider.dart';
 import 'package:travel/core/routes/routes.dart';
 import 'package:travel/core/utils/shared_pref_services.dart';
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
       darkTheme: AppTheme().darkTheme,
       themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
       routes: Routes.routes,
-      // home: ChatScreen(),
+      // home: AdminTourScreen(),
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import '../../../../core/common/explore_item.dart';
 import '../../../../core/di/di.dart';
 import '../../../../core/routes/route_names.dart';
-import '../../../common/explore_item.dart';
 import '../cubit/explore_states.dart';
 import '../cubit/explore_view_model.dart';
 

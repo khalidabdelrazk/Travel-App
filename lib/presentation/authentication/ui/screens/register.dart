@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/common/custom_button.dart';
+import '../../../../core/common/custom_text_button.dart';
+import '../../../../core/common/custom_text_field.dart';
+import '../../../../core/common/dialog_utils.dart';
 import '../../../../core/di/di.dart';
 import '../../../../core/routes/route_names.dart';
 import '../../../../core/utils/validators.dart';
-import '../../../common/custom_button.dart';
-import '../../../common/custom_text_button.dart';
-import '../../../common/custom_text_field.dart';
-import '../../../common/dialog_utils.dart';
+
 import '../cubit/authentication/auth_states.dart';
 import '../cubit/authentication/auth_view_model.dart';
 
@@ -46,11 +47,23 @@ class _RegisterState extends State<Register> {
             message: 'Account Created Successfully',
             title: "Welcome ${state.response.userData.name}",
             posActionName: 'Ok',
+            posAction: (){
+              Navigator.pushReplacementNamed(context, RouteNames.login);
+            }
           );
         }
       },
       child: Scaffold(
         appBar: AppBar(
+          surfaceTintColor: Theme.of(context).cardColor,
+          backgroundColor: Theme.of(context).cardColor,
+          elevation: 6,
+          shadowColor: Colors.black.withOpacity(0.1),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(24),
+            ),
+          ),
           title: Text('Register', style: Theme.of(context).textTheme.titleMedium),
           centerTitle: true,
         ),

@@ -12,8 +12,8 @@ class HomeTripsUseCase {
     final result = await homeTripsRepository.getTrips();
 
     return result.fold((failure) => Left(failure), (trips) {
-      final filteredTrips =
-          trips.where((trip) => num.parse(trip.rating ?? "0") >= 4).toList();
+      final List<HomeTripsResponseEntity> filteredTrips =
+          trips.where((trip) => (trip.rating ?? 0) >= 4).toList();
       return Right(filteredTrips);
     });
   }

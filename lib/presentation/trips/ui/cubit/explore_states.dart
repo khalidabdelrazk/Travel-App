@@ -1,6 +1,5 @@
 import 'package:travel/presentation/trips/domain/Entity/explore_response_entity.dart';
 
-import '../../domain/Entity/hotels_response_entity.dart';
 
 abstract class ExploreStates{}
 class InitState extends ExploreStates{}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/core/theme/app_theme.dart';
 
 class DialogUtils {
   static void showLoading(
@@ -8,6 +9,7 @@ class DialogUtils {
         context: context,
         builder: (context) {
           return AlertDialog(
+            backgroundColor: Colors.transparent,
             content: Center(child: const CircularProgressIndicator()),
           );
         });
@@ -30,9 +32,6 @@ class DialogUtils {
       actions.add(TextButton(
           onPressed: () {
             Navigator.pop(context);
-            // if(posAction != null){
-            //   posAction.call();
-            // }
             posAction?.call();
           },
           child: Text(
@@ -54,11 +53,11 @@ class DialogUtils {
           return AlertDialog(
             content: Text(
               message,
-              style: TextTheme.of(context).bodySmall,
+              style: TextTheme.of(context).bodyMedium,
             ),
             title: Text(
               title ?? '',
-              style: TextTheme.of(context).bodySmall,
+              style: TextTheme.of(context).titleMedium,
             ),
             actions: actions,
           );

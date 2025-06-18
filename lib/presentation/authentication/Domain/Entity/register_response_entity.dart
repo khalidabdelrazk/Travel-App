@@ -1,16 +1,16 @@
 class RegisterResponseEntity {
-  RegisterResponseEntity({this.success, this.userData, this.error});
+  RegisterResponseEntity({this.success, this.userData, this.message});
 
   RegisterResponseEntity.fromJson(dynamic json) {
     success = json['success'];
-    error = json['error'];
+    message = json['error'];
     userData =
     json['userData'] != null ? UserDataEntity.fromJson(json['userData']) : null;
   }
 
   bool? success;
   UserDataEntity? userData;
-  String? error;
+  String? message;
 
 }
 

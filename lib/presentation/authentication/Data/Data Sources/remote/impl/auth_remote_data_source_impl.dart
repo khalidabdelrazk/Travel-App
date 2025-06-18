@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel/core/api%20manager/api_constants.dart';
-import 'package:travel/core/api%20manager/api_endpints.dart';
+import 'package:travel/core/api%20manager/api_endpoints.dart';
 import 'package:travel/presentation/authentication/Data/Models/forget_password_response_dm.dart';
 import 'package:travel/presentation/authentication/Domain/Entity/forget_password_response_entity.dart';
 
@@ -58,7 +58,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           return Right(registerResponse);
         }
-        return Left(ServerError(errorMessage: registerResponse.error!));
+        return Left(
+          ServerError(
+            errorMessage: response.data['message'] ?? " Server Error",
+          ),
+        );
       } else {
         return Left(NetworkError(errorMessage: "Network Error"));
       }
@@ -95,7 +99,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           return Right(loginResponseDm);
         }
-        return Left(ServerError(errorMessage: loginResponseDm.message!));
+        return Left(
+          ServerError(
+            errorMessage: response.data['message'] ?? " Server Error",
+          ),
+        );
       } else {
         return Left(NetworkError(errorMessage: "Network Error"));
       }
@@ -117,7 +125,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
           connectivityResult.contains(ConnectivityResult.mobile)) {
         var response = await apiManager.postData(
-          path: ApiConstants.baseUrl + ApiEndPoints.resetPassword,
+          path: ApiEndPoints.resetPassword,
           data: {"email": email, "newPassword": newPassword},
           options: Options(
             headers: {"Content-Type": "application/json"},
@@ -132,7 +140,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           return Right(forgetPasswordResponseDm);
         }
         return Left(
-          ServerError(errorMessage: forgetPasswordResponseDm.message!),
+          ServerError(
+            errorMessage: response.data['message'] ?? " Server Error",
+          ),
         );
       } else {
         return Left(NetworkError(errorMessage: "Network Error"));

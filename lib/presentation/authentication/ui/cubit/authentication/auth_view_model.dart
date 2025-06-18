@@ -10,7 +10,8 @@ class AuthViewModel extends Cubit<AuthStates> {
   AuthViewModel({required this.authUseCase}) : super(InitState());
   //
   final emailController = TextEditingController(
-    text: 'amr212432@gmail.com',
+    // text: 'amr212432@gmail.com',
+    text: 'anatooht@gmail.com',
   );
   final nameController = TextEditingController(text: 'khalidMohammed');
   final phoneController = TextEditingController(text: '+201141209334');
@@ -18,7 +19,10 @@ class AuthViewModel extends Cubit<AuthStates> {
   final rePasswordController = TextEditingController(text: 'Amr2510@');
   final formKey = GlobalKey<FormState>();
 
-  final loginPasswordController = TextEditingController(text: 'Amr2510@');
+  final loginPasswordController = TextEditingController(
+      // text: 'Amr2510@'
+      text: 'AaAa112233'
+  );
   final resetPasswordController = TextEditingController(text: 'Amr2510@1');
 
   register() async {
