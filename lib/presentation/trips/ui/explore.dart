@@ -6,7 +6,6 @@ import '../../../core/common/custom_text_field.dart';
 import '../../../core/common/explore_item.dart';
 import '../../../core/di/di.dart';
 import '../../../core/routes/route_names.dart';
-
 import 'cubit/explore_states.dart';
 import 'cubit/explore_view_model.dart';
 
@@ -17,7 +16,8 @@ class ExplorePage extends StatefulWidget {
   State<ExplorePage> createState() => _ExplorePageState();
 }
 
-class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin {
+class _ExplorePageState extends State<ExplorePage>
+    with TickerProviderStateMixin {
   final TextEditingController searchController = TextEditingController();
   late final ExploreViewModel exploreViewModel = getIt<ExploreViewModel>();
   late TabController _tabController;
@@ -48,26 +48,21 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
 
   void _onSearchChanged() {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
+    _debounce = Timer(const Duration(milliseconds: 100), () {
       final currentQuery = searchController.text.trim();
-      // Only fetch if the query has changed AND is different from the last fetched query
-      // This prevents refetching if user types and deletes back to the same last query
       if (currentQuery != _lastQuery) {
-        _lastQuery = currentQuery; // Update last query before fetching
+        _lastQuery = currentQuery;
         _fetchData();
       }
     });
   }
 
   void _onTabChanged() {
-    // Only fetch data if the tab is not being animated (i.e., it's settled)
     if (!_tabController.indexIsChanging) {
       _lastQuery = ''; // Reset _lastQuery when tab changes
-      // Immediately fetch data for the newly selected tab using the current search query
       _fetchData();
     }
   }
-
 
   void _fetchData() {
     final query = searchController.text.trim();
@@ -96,7 +91,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                 suffixIcon: Icons.clear,
                 onSuffixPressed: () {
                   searchController.clear();
-                  _lastQuery = ''; // Clear the last query when the search box is cleared
+                  _lastQuery = '';
                   FocusManager.instance.primaryFocus?.unfocus();
                   _fetchData(); // Fetch data immediately after clearing
                 },
@@ -167,7 +162,10 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(state.errorMessage, style: Theme.of(context).textTheme.labelLarge),
+                Text(
+                  state.errorMessage,
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: _fetchData,
@@ -187,7 +185,6 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                 return ExploreItem(
                   data: data,
                   onTap: () {
-                    print(data.rating);
                     Navigator.pushNamed(
                       context,
                       RouteNames.exploreDetails,
@@ -196,7 +193,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                   },
                 );
               },
-              staggeredTileBuilder: (index) => StaggeredTile.count(2, index.isEven ? 3 : 2),
+              staggeredTileBuilder:
+                  (index) => StaggeredTile.count(2, index.isEven ? 3 : 2),
               mainAxisSpacing: 8,
               crossAxisSpacing: 8,
               padding: const EdgeInsets.only(top: 8, bottom: 70),

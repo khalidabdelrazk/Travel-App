@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'api_constants.dart';
 
 @singleton
 class ApiManager {

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/common/popular_item.dart';
+import '../../../../core/routes/route_names.dart';
 import '../../domain/Entity/trips_response_entity.dart';
 
 class SectionWithPopularItems extends StatelessWidget {
   final String title;
-  final VoidCallback? onSeeMore;
   final List<HomeTripsResponseEntity> items;
 
   const SectionWithPopularItems({
     super.key,
     required this.title,
     required this.items,
-    this.onSeeMore,
   });
 
   @override
@@ -42,12 +41,23 @@ class SectionWithPopularItems extends StatelessWidget {
             itemCount: items.length,
             separatorBuilder: (_, __) => const SizedBox(width: 12),
             itemBuilder: (context, index) {
-              return PopularItem(data: items[index], onTap: () {},height: 220,width: 200,);
+              return PopularItem(
+                data: items[index],
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    RouteNames.exploreDetails,
+                    arguments: items[index],
+                  );
+                },
+                height: 220,
+                width: 200,
+              );
             },
           ),
         ),
-        // SizedBox(height: 77),
 
+        // SizedBox(height: 77),
       ],
     );
   }

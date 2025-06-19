@@ -1,4 +1,3 @@
-import 'package:travel/presentation/wishlist/domain/Entity/wishlist_response_entity.dart';
 
 abstract class WishListStates {}
 

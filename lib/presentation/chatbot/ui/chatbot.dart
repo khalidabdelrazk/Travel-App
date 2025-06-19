@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/core/utils/shared_pref_services.dart';
 import 'package:travel/presentation/chatbot/ui/widget/chat_preview_app_bar.dart';
 import 'package:travel/presentation/chatbot/ui/widget/preview_message.dart';
 import 'package:travel/presentation/chatbot/ui/cubit/chatbot_states.dart';
@@ -26,7 +27,7 @@ class _ChatbotState extends State<Chatbot> {
     super.initState();
     // Add default welcome message from bot
     _messages.add({
-      "text": "Hey, how can I help you?",
+      "text": "Hey ${SharedPrefService.instance.getName() ?? 'Khalid'}, how can I help you?",
       "isSender": false,
       "time": _currentTime(),
     });

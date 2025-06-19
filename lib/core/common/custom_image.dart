@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/color.dart';
 
-
 class CustomImage extends StatelessWidget {
   const CustomImage(
     this.image, {
@@ -19,7 +18,7 @@ class CustomImage extends StatelessWidget {
     this.radius = 50,
     this.isShadow = true,
   });
-  final String image;
+  final String? image;
   final double width;
   final double height;
   final double borderWidth;
@@ -52,11 +51,11 @@ class CustomImage extends StatelessWidget {
       child:
           isNetwork
               ? CachedNetworkImage(
-                imageUrl: image,
-                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => Icon(Icons.broken_image),
-                // placeholder: (context, url) => BlankImageWidget(),
-                // errorWidget: (context, url, error) => BlankImageWidget(),
+                imageUrl: image ?? '',
+                // placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                // errorWidget: (context, url, error) => Icon(Icons.broken_image),
+                placeholder: (context, url) => BlankImageWidget(),
+                errorWidget: (context, url, error) => BlankImageWidget(),
                 imageBuilder:
                     (context, imageProvider) => Container(
                       decoration: BoxDecoration(
@@ -65,7 +64,7 @@ class CustomImage extends StatelessWidget {
                       ),
                     ),
               )
-              : Image(image: AssetImage(image), fit: fit),
+              : Image(image: AssetImage(image ?? ''), fit: fit),
     );
   }
 }

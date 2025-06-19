@@ -1,15 +1,14 @@
+// explore_details.dart
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_view_model.dart';
 import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_states.dart';
+import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_view_model.dart';
+import 'package:travel/presentation/explore%20details/ui/widgets/explore_details_body.dart';
 import 'package:travel/presentation/trips/domain/Entity/explore_response_entity.dart';
-import '../../../core/common/category_item.dart';
-import '../../../core/common/custom_image.dart';
-import '../../../core/common/dialog_utils.dart';
-import '../../../core/di/di.dart';
-import '../../../core/theme/color.dart';
+import 'package:travel/core/common/dialog_utils.dart';
+import 'package:travel/core/di/di.dart';
 
 class ExploreDetails extends StatefulWidget {
   const ExploreDetails({super.key});
@@ -19,18 +18,18 @@ class ExploreDetails extends StatefulWidget {
 }
 
 class _ExploreDetailsState extends State<ExploreDetails> {
-  late final TripDetailsViewModel tripDetailsViewModel =
-      getIt<TripDetailsViewModel>();
+  late final TripDetailsViewModel tripDetailsViewModel = getIt<TripDetailsViewModel>();
   late double width;
   late double height;
   late List tripInfo;
-  late ExploreResponseEntity data;
+  late ExploreResponseEntity? data;
 
   int currentImageIndex = 0;
   late PageController pageController;
   late Timer autoScrollTimer;
 
   late int temperature;
+  bool isScreenLoading = true;
 
   @override
   void initState() {
@@ -50,28 +49,38 @@ class _ExploreDetailsState extends State<ExploreDetails> {
       temperature = getRandomNumberByTime();
 
       tripInfo = [
-        {
-          "icon": Icons.star_rate_rounded,
-          "value": (data.rating ?? 0).toString(),
-        },
+        {"icon": Icons.star_rate_rounded, "value": (data?.rating ?? 0).toString()},
         {"icon": Icons.wb_sunny_rounded, "value": "$temperature°C"},
-        {"icon": Icons.attach_money_rounded, "value": '${data.price}'},
+        {"icon": Icons.attach_money_rounded, "value": '${data?.price}'},
       ];
 
-      tripDetailsViewModel.isTripFav(data.id ?? '');
       startAutoScroll();
+
+      tripDetailsViewModel.isTripFav(data!.id ?? '').then((isFav) {
+        if (mounted) {
+          setState(() {
+            tripDetailsViewModel.toggleFav = isFav;
+            isScreenLoading = false;
+          });
+        }
+      });
+    } else {
+      Future.microtask(() {
+        if (mounted) {
+          setState(() {
+            isScreenLoading = false;
+            data = null;
+          });
+        }
+      });
     }
   }
 
   void startAutoScroll() {
-    autoScrollTimer = Timer.periodic(Duration(seconds: 3), (_) {
-      if (!mounted || data.photos == null || data.photos!.isEmpty) return;
-      final nextPage = (currentImageIndex + 1) % data.photos!.length;
-      pageController.animateToPage(
-        nextPage,
-        duration: Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
+    autoScrollTimer = Timer.periodic(const Duration(seconds: 3), (_) {
+      if (!mounted || data?.photos == null || data!.photos!.isEmpty) return;
+      final nextPage = (currentImageIndex + 1) % data!.photos!.length;
+      pageController.animateToPage(nextPage, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
     });
   }
 
@@ -84,255 +93,54 @@ class _ExploreDetailsState extends State<ExploreDetails> {
 
   @override
   Widget build(BuildContext context) {
-    if (ModalRoute.of(context)?.settings.arguments == null) {
-      return const Scaffold(body: Center(child: Text("No data provided")));
-    }
-
     return BlocListener<TripDetailsViewModel, TripDetailsStates>(
       bloc: tripDetailsViewModel,
       listener: (context, state) {
         if (state is DetailsSuccessState) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.response.message!)));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.response.message!)));
         } else if (state is DetailsErrorState) {
-          DialogUtils.showMessage(
-            context: context,
-            message: 'Error: ${state.errorMessage}',
-          );
+          DialogUtils.showMessage(context: context, message: 'Error: ${state.errorMessage}');
+          setState(() {
+            tripDetailsViewModel.toggleFav = !tripDetailsViewModel.toggleFav;
+          });
         }
       },
-      child: Scaffold(
+      child: isScreenLoading
+          ? const Scaffold(body: Center(child: CircularProgressIndicator()))
+          : data == null
+          ? const Scaffold(body: Center(child: Text("No data provided")))
+          : Scaffold(
         appBar: AppBar(
           surfaceTintColor: Theme.of(context).cardColor,
           backgroundColor: Theme.of(context).cardColor,
           elevation: 6,
+          centerTitle: true,
           shadowColor: Colors.black.withOpacity(0.1),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
           ),
           title: Text(
-            data.name ?? "",
+            data?.name ?? "",
             maxLines: 2,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: TextTheme.of(context).bodySmall,
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Column(
-            children: [
-              SizedBox(height: 5),
-              Expanded(
-                child: ListView(
-                  children: [
-                    imageSlider(),
-                    SizedBox(height: height * 0.02),
-                    detailsBar(),
-                    SizedBox(height: height * 0.02),
-                    placeInfo(),
-                    SizedBox(height: height * 0.02),
-                    Text(
-                      'Description',
-                      style: TextTheme.of(context).headlineMedium,
-                    ),
-                    Text(
-                      data.description ?? '',
-                      style: TextTheme.of(context).bodyMedium,
-                    ),
-                    SizedBox(height: height * 0.02),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 5,
-                        ),
-                        backgroundColor: Theme.of(context).cardColor,
-                      ),
-                      child: Text("Book Now"),
-                    ),
-                    SizedBox(height: height * 0.02),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget detailsBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                data.name ?? '',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              Row(
-                children: [
-                  Icon(Icons.location_on, size: 15),
-                  Flexible(
-                    child: Text(
-                      data.location ?? '',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        BlocBuilder<TripDetailsViewModel, TripDetailsStates>(
-          bloc: tripDetailsViewModel,
-          builder: (context, state) {
-            if (state is DetailsLoadingState) {
-              return const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
-              );
-            }
-
-            bool isFav = tripDetailsViewModel.toggleFav;
-            if (state is FavOrNotState) {
-              isFav = state.isFav;
-            }
-
-            return IconButton(
-              onPressed: () {
-                tripDetailsViewModel.toggleFav = !isFav;
-                tripDetailsViewModel.addToFav(
-                  data.id ?? '',
-                  tripDetailsViewModel.toggleFav,
-                );
-              },
-              icon: Icon(
-                isFav ? Icons.favorite : Icons.favorite_border,
-                color: Colors.red,
-              ),
-            );
+        body: ExploreDetailsBody(
+          context: context,
+          data: data!,
+          width: width,
+          height: height,
+          tripInfo: tripInfo,
+          viewModel: tripDetailsViewModel,
+          pageController: pageController,
+          currentImageIndex: currentImageIndex,
+          onImageIndexChanged: (index) {
+            setState(() => currentImageIndex = index);
           },
         ),
-      ],
-    );
-  }
-
-  Widget placeInfo() {
-    int index = 0;
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: EdgeInsets.only(bottom: 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children:
-            tripInfo
-                .map(
-                  (info) =>
-                      CategoryItem(data: info, color: listColors[index++ % 10]),
-                )
-                .toList(),
       ),
-    );
-  }
-
-  Widget imageSlider() {
-    return Column(
-      children: [
-        Stack(
-          children: [
-            SizedBox(
-              height: height * 0.6,
-              width: width,
-              child: PageView.builder(
-                controller: pageController,
-                itemCount: data.photos?.length ?? 0,
-                onPageChanged: (index) {
-                  setState(() {
-                    currentImageIndex = index;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: CustomImage(
-                      data.photos![index],
-                      height: height * 0.6,
-                      width: width,
-                      radius: 10,
-                    ),
-                  );
-                },
-              ),
-            ),
-            Positioned(
-              left: 10,
-              top: height * 0.3 - 25,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 28),
-                onPressed: () {
-                  final previous =
-                      (currentImageIndex - 1 + data.photos!.length) %
-                      data.photos!.length;
-                  pageController.animateToPage(
-                    previous,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                  );
-                },
-              ),
-            ),
-            Positioned(
-              right: 10,
-              top: height * 0.3 - 25,
-              child: IconButton(
-                icon: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
-                  size: 28,
-                ),
-                onPressed: () {
-                  final next = (currentImageIndex + 1) % data.photos!.length;
-                  pageController.animateToPage(
-                    next,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(data.photos!.length, (index) {
-            bool isActive = index == currentImageIndex;
-            return AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              margin: EdgeInsets.symmetric(horizontal: 4),
-              width: isActive ? 12 : 8,
-              height: 8,
-              decoration: BoxDecoration(
-                color: isActive ? Colors.blue : Colors.grey,
-                borderRadius: BorderRadius.circular(4),
-              ),
-            );
-          }),
-        ),
-      ],
     );
   }
 
@@ -340,6 +148,6 @@ class _ExploreDetailsState extends State<ExploreDetails> {
     final now = DateTime.now();
     final seed = now.millisecondsSinceEpoch;
     final random = Random(seed);
-    return 20 + random.nextInt(11); // 20 to 30 inclusive
+    return 20 + random.nextInt(11);
   }
 }

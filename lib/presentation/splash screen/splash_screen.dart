@@ -19,13 +19,17 @@ class _SplashScreenState extends State<SplashScreen> {
       if (mounted) {
         Navigator.pushReplacementNamed(
           context,
-          isLoggedIn ? RouteNames.homeScreen : RouteNames.login,
+          isFirstOpened
+              ? (isLoggedIn ? RouteNames.homeScreen : RouteNames.login)
+              : RouteNames.onBoarding,
         );
       }
     });
   }
 
   bool get isLoggedIn => SharedPrefService.instance.getToken() != null;
+  bool get isFirstOpened => SharedPrefService.instance.isFirsTime() ?? false;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

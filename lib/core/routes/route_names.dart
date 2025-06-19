@@ -7,4 +7,5 @@ class RouteNames{
   static const String register = 'register';
   static const String forgetPassword = 'forgetPassword';
   static const String adminScreen = 'adminScreen';
+  static const String onBoarding = 'onboarding';
 }

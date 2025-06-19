@@ -84,9 +84,10 @@ class _AdminTourScreenState extends State<AdminTourScreen> {
               ),
               TextButton(
                 onPressed:
-                    () => Navigator.pushReplacementNamed(
+                    () => Navigator.pushNamedAndRemoveUntil(
                       context,
-                      RouteNames.login,
+                      RouteNames.adminScreen,
+                      (route) => false,
                     ),
                 child: const Text('Logout'),
               ),
@@ -103,13 +104,16 @@ class _AdminTourScreenState extends State<AdminTourScreen> {
         if (state is LoadingState) {
           DialogUtils.showLoading(context: context);
         } else if (state is ErrorState) {
+          DialogUtils.hideLoading(context);
           DialogUtils.showMessage(
             context: context,
             message: state.errorMessage,
           );
         } else if (state is SuccessState) {
+          DialogUtils.hideLoading(context);
           DialogUtils.showMessage(
             context: context,
+            title: 'Success',
             message: "Tour Posted Successfully",
             posActionName: 'Ok',
           );

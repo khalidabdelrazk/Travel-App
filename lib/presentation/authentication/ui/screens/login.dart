@@ -41,11 +41,11 @@ class _LoginState extends State<Login> {
         } else if (state is SuccessState) {
           DialogUtils.hideLoading(context);
           if (state.response.isAdmin) {
-            Navigator.pushReplacementNamed(context, RouteNames.adminScreen);
+            Navigator.pushNamedAndRemoveUntil(context, RouteNames.adminScreen, (route) => false,);
             return;
           }
-          SharedPrefService.instance.setToken(state.response.token);
-          Navigator.pushReplacementNamed(context, RouteNames.homeScreen);
+          SharedPrefService.instance.login(name: state.response.name,token: state.response.token);
+          Navigator.pushNamedAndRemoveUntil(context, RouteNames.homeScreen, (route) => false,);
         }
       },
       child: Scaffold(
@@ -56,9 +56,7 @@ class _LoginState extends State<Login> {
           elevation: 6,
           shadowColor: Colors.black.withOpacity(0.1),
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(24),
-            ),
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
           ),
           automaticallyImplyLeading: false,
           centerTitle: true,

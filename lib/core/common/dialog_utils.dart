@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travel/core/theme/app_theme.dart';
 
 class DialogUtils {
   static void showLoading(

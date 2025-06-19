@@ -85,6 +85,7 @@ class _RegisterState extends State<Register> {
                     prefixIcon: Icons.person_outline,
                     keyboardType: TextInputType.text,
                     inputColor: Theme.of(context).primaryColor,
+                    validator: (p0) => AppValidators.validateUsername(p0),
                   ),
 
                   SizedBox(height: height * 0.02),

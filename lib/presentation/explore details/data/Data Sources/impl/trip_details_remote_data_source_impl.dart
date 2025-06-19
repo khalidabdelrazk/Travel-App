@@ -7,7 +7,6 @@ import '../../../../../../../core/api manager/api_endpoints.dart';
 import '../../../../../../../core/api manager/api_manager.dart';
 import '../../../../../../../core/error/failures.dart';
 import '../../../../../core/utils/shared_pref_services.dart';
-import '../../../domain/Entity/fav_response_entity.dart';
 import '../trip_details_remote_data_source.dart';
 
 @Injectable(as: TripDetailsRemoteDataSource)
@@ -48,7 +47,6 @@ class TripDetailsRemoteDataSourceImpl implements TripDetailsRemoteDataSource {
             validateStatus: (status) => true,
           ),
         );
-        print(response.data);
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           final FavResponseDm favResponseDm = FavResponseDm.fromJson(
             response.data,
@@ -86,7 +84,6 @@ class TripDetailsRemoteDataSourceImpl implements TripDetailsRemoteDataSource {
             validateStatus: (status) => true,
           ),
         );
-        print(response.data);
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
           final FavResponseDm favResponseDm = FavResponseDm.fromJson(
             response.data,

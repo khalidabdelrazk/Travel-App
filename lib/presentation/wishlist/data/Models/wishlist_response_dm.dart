@@ -9,7 +9,6 @@ class WishlistResponseDm extends WishlistResponseEntity{
       super.price,
       super.location,
       super.city,
-      super.message,
       this.v,
       super.rating,
       super.type,});

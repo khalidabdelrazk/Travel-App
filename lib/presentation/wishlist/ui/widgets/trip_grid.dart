@@ -12,7 +12,7 @@ class TripsGrid extends StatelessWidget {
 
   TripsGrid({super.key, required this.trips, required this.onFavTap});
 
-  WishlistViewModel wishlistViewModel = getIt<WishlistViewModel>();
+  final WishlistViewModel wishlistViewModel = getIt<WishlistViewModel>();
 
   @override
   Widget build(BuildContext context) {

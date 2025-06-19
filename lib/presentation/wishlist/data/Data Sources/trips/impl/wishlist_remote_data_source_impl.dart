@@ -51,6 +51,7 @@ class WishlistRemoteDataSourceImpl implements WishlistRemoteDataSource {
         return Left(NetworkError(errorMessage: "No internet connection"));
       }
     } catch (e) {
+      // rethrow;
       return Left(ServerError(errorMessage: e.toString()));
     }
   }

@@ -112,7 +112,10 @@ class _MyDrawerState extends State<MyDrawer> {
                         ),
                       ),
                       SizedBox(width: width * 0.02),
-                      Text("Theme", style: TextTheme.of(context).headlineMedium),
+                      Text(
+                        "Theme",
+                        style: TextTheme.of(context).headlineMedium,
+                      ),
                     ],
                   ),
                   SizedBox(height: height * 0.02),
@@ -135,15 +138,16 @@ class _MyDrawerState extends State<MyDrawer> {
                           Icons.arrow_drop_down,
                           color: Theme.of(context).primaryColor,
                         ),
-                        items: ['Light', 'Dark'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: TextTheme.of(context).headlineSmall,
-                            ),
-                          );
-                        }).toList(),
+                        items:
+                            ['Light', 'Dark'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextTheme.of(context).headlineSmall,
+                                ),
+                              );
+                            }).toList(),
                         onChanged: (String? newValue) {
                           if (newValue == null) return;
                           setState(() {
@@ -200,10 +204,13 @@ class _MyDrawerState extends State<MyDrawer> {
               bottom: height * 0.03,
             ),
             child: CustomButton(
-              body: Text("Logout",style: GoogleFonts.inter(color: Colors.white),),
+              body: Text(
+                "Logout",
+                style: GoogleFonts.inter(color: Colors.white),
+              ),
               color: Colors.white,
               backgroundColor: Colors.red,
-              onPressed: () async{
+              onPressed: () async {
                 _confirmLogout();
               },
             ),
@@ -216,23 +223,28 @@ class _MyDrawerState extends State<MyDrawer> {
   void _confirmLogout() {
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Confirm Logout'),
-        content: const Text('Are you sure you want to log out?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+      builder:
+          (_) => AlertDialog(
+            title: const Text('Confirm Logout'),
+            content: const Text('Are you sure you want to log out?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  await SharedPrefService.instance.clearToken();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    RouteNames.login,
+                    (route) => false,
+                  );
+                },
+                child: const Text('Logout'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () async{
-              await SharedPrefService.instance.clearToken();
-              Navigator.pushReplacementNamed(context, RouteNames.login);
-            },
-            child: const Text('Logout'),
-          ),
-        ],
-      ),
     );
   }
 }

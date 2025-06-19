@@ -32,7 +32,6 @@ class TripsRemoteDataSourceImpl implements TripsRemoteDataSource {
         );
 
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          print(response.data);
           List<dynamic> jsonList = response.data;
           List<ExploreResponseDm> trips =
               jsonList

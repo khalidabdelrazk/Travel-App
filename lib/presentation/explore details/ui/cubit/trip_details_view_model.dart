@@ -25,15 +25,21 @@ class TripDetailsViewModel extends Cubit<TripDetailsStates> {
     );
   }
 
-  void isTripFav(String tripId) async {
+  Future<bool> isTripFav(String tripId) async {
     emit(DetailsLoadingState());
     var either = await wishlistUseCase.invoke();
-    either.fold(
-          (left) => emit(DetailsErrorState(errorMessage: left.errorMessage)),
+
+    return either.fold(
+          (left) {
+        emit(DetailsErrorState(errorMessage: left.errorMessage));
+        return false;
+      },
           (right) {
         toggleFav = right.any((element) => element.id == tripId);
         emit(FavOrNotState(isFav: toggleFav));
+        return toggleFav;
       },
     );
   }
+
 }

@@ -1,6 +1,5 @@
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:travel/core/api%20manager/api_constants.dart';
 import 'package:travel/core/api%20manager/api_endpoints.dart';
 import 'package:travel/core/error/failures.dart';
 import '../../../../../../core/api manager/api_manager.dart';

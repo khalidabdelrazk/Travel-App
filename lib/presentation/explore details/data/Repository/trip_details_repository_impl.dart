@@ -2,7 +2,6 @@ import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel/presentation/explore%20details/data/Data%20Sources/trip_details_remote_data_source.dart';
 import 'package:travel/presentation/explore%20details/domain/Repository/trip_details_repository.dart';
-import 'package:travel/presentation/trips/domain/Repository/explore_repository.dart';
 import '../../../../../../core/error/failures.dart';
 import '../../domain/Entity/fav_response_entity.dart';
 

@@ -11,6 +11,5 @@ class WishlistResponseEntity extends ExploreResponseEntity {
     super.city,
     super.rating,
     super.type,
-    super.message,
   });
 }

@@ -11,16 +11,14 @@ class ChatPreviewAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: preferredSize.height,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      surfaceTintColor: Theme.of(context).cardColor,
+      backgroundColor: Theme.of(context).cardColor,
+      elevation: 6,
+      shadowColor: Colors.black.withOpacity(0.1),
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
       ),
-      shadowColor: Theme.of(context).shadowColor,
-      elevation: 2,
+      toolbarHeight: preferredSize.height,
       titleSpacing: 0,
       title: Padding(
         padding: const EdgeInsets.only(left: 20),

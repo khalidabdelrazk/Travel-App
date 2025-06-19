@@ -39,13 +39,10 @@ class AppValidators {
   }
 
   static String? validateUsername(String? val) {
-    RegExp usernameRegex = RegExp(r'^[a-zA-Z0-9,.-]+$');
     if (val == null) {
       return 'this field is required';
-    } else if (val.isEmpty) {
+    } else if (val.trim().isEmpty) {
       return 'this field is required';
-    } else if (!usernameRegex.hasMatch(val)) {
-      return 'enter valid username';
     } else {
       return null;
     }

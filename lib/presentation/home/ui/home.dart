@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/core/routes/route_names.dart';
 import 'package:travel/presentation/home/ui/cubit/home_states.dart';
 import 'package:travel/presentation/home/ui/cubit/home_view_model.dart';
 import 'package:travel/presentation/home/ui/widgets/section_with_popular_item.dart';
@@ -45,7 +46,7 @@ class HomePageState extends State<HomePage> {
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 25),
             child: Text(
               "Most Popular",
-              style: TextTheme.of(context).headlineLarge,
+              style: TextTheme.of(context).headlineMedium,
             ),
           ),
           getPopulars(),
@@ -110,7 +111,9 @@ class HomePageState extends State<HomePage> {
                 height: 370,
                 child: PopularItem(
                   data: homeViewModel.mostPopTrips[index],
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, RouteNames.exploreDetails,arguments: homeViewModel.mostPopTrips[index]);
+                  },
                 ),
               ),
             ),
