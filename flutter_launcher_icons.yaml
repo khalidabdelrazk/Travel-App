@@ -1,0 +1,25 @@
+flutter_launcher_icons:
+  image_path: "assets/images/travel icon.png"
+
+  android: "launcher_icon"
+  min_sdk_android: 21
+#  adaptive_icon_background: "#ADD8E6"
+
+  ios: true
+  remove_alpha_channel_ios: true
+  image_path_ios: "assets/images/travel icon.png"
+
+  web:
+    generate: true
+    image_path: "assets/images/travel icon.png"
+#    background_color: "#ADD8E6"
+#    theme_color: "#ADD8E6"
+
+  windows:
+    generate: true
+    image_path: "assets/images/travel icon.png"
+    icon_size: 48
+
+  macos:
+    generate: true
+    image_path: "assets/images/travel icon.png"
