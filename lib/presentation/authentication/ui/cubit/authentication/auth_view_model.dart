@@ -9,21 +9,15 @@ class AuthViewModel extends Cubit<AuthStates> {
   AuthUseCase authUseCase;
   AuthViewModel({required this.authUseCase}) : super(InitState());
   //
-  final emailController = TextEditingController(
-    // text: 'amr212432@gmail.com',
-    text: 'anatooht@gmail.com',
-  );
-  final nameController = TextEditingController(text: 'khalidMohammed');
-  final phoneController = TextEditingController(text: '+201141209334');
-  final passwordController = TextEditingController(text: 'Amr2510@');
-  final rePasswordController = TextEditingController(text: 'Amr2510@');
+  final emailController = TextEditingController();
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+  final rePasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  final loginPasswordController = TextEditingController(
-      // text: 'Amr2510@'
-      text: 'AaAa112233'
-  );
-  final resetPasswordController = TextEditingController(text: 'Amr2510@1');
+  final loginPasswordController = TextEditingController();
+  final resetPasswordController = TextEditingController();
 
   register() async {
     if (formKey.currentState?.validate() == true) {
@@ -64,8 +58,8 @@ class AuthViewModel extends Cubit<AuthStates> {
         resetPasswordController.text,
       );
       either.fold(
-            (left) => emit(ErrorState(errorMessage: left.errorMessage)),
-            (right) => emit(SuccessState(response: right)),
+        (left) => emit(ErrorState(errorMessage: left.errorMessage)),
+        (right) => emit(SuccessState(response: right)),
       );
     }
   }
