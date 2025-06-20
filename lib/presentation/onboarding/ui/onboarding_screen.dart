@@ -15,7 +15,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
   @override
   Widget build(BuildContext context) {
-
     return IntroductionScreen(
       key: introKey,
       globalBackgroundColor: Colors.white,
@@ -38,7 +37,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           description:
               'Discover and book trips across Egypt, reserve hotels, and get instant help from our smart chatbot',
           nextText: 'Next',
-          backText: 'Back',
           onNextPressed: () => introKey.currentState?.next(),
         ),
         TravelIntroScreen(
@@ -71,10 +69,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           onNextPressed: () async {
             introKey.currentState?.next();
             await SharedPrefService.instance.setOnboardingViewed(true);
-            Navigator.pushReplacementNamed(
-              context,
-              isLoggedIn ? RouteNames.homeScreen : RouteNames.login,
-            );
+            Navigator.pushReplacementNamed(context, RouteNames.login);
           },
           onBackPressed: () => introKey.currentState?.previous(),
         ),
@@ -82,5 +77,4 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  bool get isLoggedIn => SharedPrefService.instance.getToken() != null;
 }

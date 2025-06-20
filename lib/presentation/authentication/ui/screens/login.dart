@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/core/utils/validators.dart';
 import '../../../../core/common/custom_button.dart';
 import '../../../../core/common/custom_text_button.dart';
 import '../../../../core/common/custom_text_field.dart';
@@ -8,7 +9,6 @@ import '../../../../core/di/di.dart';
 import '../../../../core/routes/route_names.dart';
 import '../../../../core/theme/color.dart';
 import '../../../../core/utils/shared_pref_services.dart';
-
 import '../cubit/authentication/auth_states.dart';
 import '../cubit/authentication/auth_view_model.dart';
 
@@ -89,6 +89,7 @@ class _LoginState extends State<Login> {
                     keyboardType: TextInputType.emailAddress,
                     inputColor: Theme.of(context).primaryColor,
                     prefixIcon: Icons.email_outlined,
+                    validator: (p0) => AppValidators.validateEmail(p0),
                   ),
 
                   const SizedBox(height: 15),
@@ -110,6 +111,7 @@ class _LoginState extends State<Login> {
                         _obscurePassword = !_obscurePassword;
                       });
                     },
+                    validator: (p0) => AppValidators.validatePassword(p0),
                   ),
 
                   const SizedBox(height: 10),
