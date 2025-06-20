@@ -154,6 +154,7 @@ class _RegisterState extends State<Register> {
                     prefixIcon: Icons.phone,
                     keyboardType: TextInputType.phone,
                     inputColor: Theme.of(context).primaryColor,
+                    validator: (p0) => AppValidators.validatePhoneNumber(p0),
                   ),
 
                   SizedBox(height: height * 0.03),

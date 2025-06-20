@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/core/utils/validators.dart';
 
 import '../../../../core/common/custom_button.dart';
 import '../../../../core/common/custom_text_field.dart';
@@ -82,6 +83,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     prefixIcon: Icons.email_outlined,
                     inputColor: Theme.of(context).primaryColor,
                     labelColor: Theme.of(context).primaryColor,
+                    validator: (p0) => AppValidators.validateEmail(p0),
                   ),
                   const SizedBox(height: 25),
 
@@ -102,6 +104,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         hidePassword = !hidePassword;
                       });
                     },
+                    validator: (p0) => AppValidators.validatePassword(p0),
                     inputColor: Theme.of(context).primaryColor,
                     labelColor: Theme.of(context).primaryColor,
                   ),
