@@ -53,7 +53,7 @@ class TripDetailsRemoteDataSourceImpl implements TripDetailsRemoteDataSource {
           );
           return Right(favResponseDm);
         }
-        return Left(ServerError(errorMessage: response.data.message));
+        return Left(ServerError(errorMessage: 'Too much requests'));
       } else {
         return Left(NetworkError(errorMessage: "No internet connection"));
       }
@@ -90,7 +90,7 @@ class TripDetailsRemoteDataSourceImpl implements TripDetailsRemoteDataSource {
           );
           return Right(favResponseDm);
         }
-        return Left(ServerError(errorMessage: response.data.message));
+        return Left(ServerError(errorMessage: 'Too much requests'));
       } else {
         return Left(NetworkError(errorMessage: "No internet connection"));
       }

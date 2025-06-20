@@ -23,8 +23,9 @@ class _WishlistState extends State<Wishlist> {
         if (state is ErrorState) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(state.errorMessage),
+              Text(state.errorMessage,textAlign: TextAlign.center,),
               TextButton(
                 onPressed: wishlistViewModel.getWishlist,
                 child: Text('Try Again'),

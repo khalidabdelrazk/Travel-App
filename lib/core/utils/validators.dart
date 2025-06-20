@@ -61,7 +61,7 @@ class AppValidators {
       return 'this field is required';
     } else if (int.tryParse(val.trim()) == null) {
       return 'enter numbers only';
-    } else if (val.trim().length <= 11) {
+    } else if (val.trim().length < 11) {
       return 'Number should be at least 11 digits';
     } else {
       return null;

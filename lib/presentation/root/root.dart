@@ -103,7 +103,7 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
         centerTitle: true,
       ),
 
-      drawer: MyDrawer(onTap: (p0, p1) => onTap(p0, p1)),
+      drawer: MyDrawer(onTap: (p0) => onTap(p0)),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: getBarPage(),
       floatingActionButton: getBottomBar(),
@@ -160,9 +160,8 @@ class RootAppState extends State<RootApp> with TickerProviderStateMixin {
     );
   }
 
-  void onTap(bool value, int index) {
+  void onTap(int index) {
     setState(() {
-      showFloatingActionButton = value;
       activeTab = index;
     });
   }

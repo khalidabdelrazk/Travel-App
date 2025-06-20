@@ -71,27 +71,17 @@ class _AdminTourScreenState extends State<AdminTourScreen> {
   }
 
   void _confirmLogout() {
-    showDialog(
+    DialogUtils.showMessage(
       context: context,
-      builder:
-          (_) => AlertDialog(
-            title: const Text('Confirm Logout'),
-            content: const Text('Are you sure you want to log out?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed:
-                    () => Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      RouteNames.adminScreen,
-                      (route) => false,
-                    ),
-                child: const Text('Logout'),
-              ),
-            ],
+      message: 'Are you sure you want to log out?',
+      title: 'Confirm Logout',
+      posActionName: 'Logout',
+      negActionName: 'Cancel',
+      posAction:
+          () => Navigator.pushNamedAndRemoveUntil(
+            context,
+            RouteNames.login,
+            (route) => false,
           ),
     );
   }
@@ -108,6 +98,7 @@ class _AdminTourScreenState extends State<AdminTourScreen> {
           DialogUtils.showMessage(
             context: context,
             message: state.errorMessage,
+            posActionName: 'ok'
           );
         } else if (state is SuccessState) {
           DialogUtils.hideLoading(context);
@@ -157,7 +148,7 @@ class _AdminTourScreenState extends State<AdminTourScreen> {
                   TextFormField(
                     controller: administratorViewModel.priceController,
                     keyboardType: TextInputType.number,
-                    decoration: _inputDecoration('Price (EGP)'),
+                    decoration: _inputDecoration('Price (\$)'),
                     validator:
                         (v) => v == null || v.isEmpty ? 'Enter price' : null,
                   ),

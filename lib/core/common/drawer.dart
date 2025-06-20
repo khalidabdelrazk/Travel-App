@@ -5,11 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:travel/core/provider/theme_provider.dart';
 import 'package:travel/core/routes/route_names.dart';
 import 'package:travel/core/utils/shared_pref_services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme/color.dart';
 import 'custom_button.dart';
 
 class MyDrawer extends StatefulWidget {
-  final Function(bool, int) onTap;
+  final Function(int) onTap;
   const MyDrawer({super.key, required this.onTap});
 
   @override
@@ -53,10 +54,7 @@ class _MyDrawerState extends State<MyDrawer> {
           ),
           SizedBox(height: height * 0.04),
           Text("Find Your Dream", style: TextTheme.of(context).headlineSmall),
-          Text(
-            "Destination With Us",
-            style: TextTheme.of(context).headlineSmall,
-          ),
+          Text("Destination With Us", style: TextTheme.of(context).headlineSmall),
           SizedBox(height: height * 0.03),
           Divider(
             height: 3,
@@ -72,7 +70,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   SizedBox(height: height * 0.02),
                   InkWell(
                     onTap: () {
-                      widget.onTap(true, 1);
+                      widget.onTap(0);
                       Navigator.pop(context);
                     },
                     child: Row(
@@ -86,20 +84,12 @@ class _MyDrawerState extends State<MyDrawer> {
                           ),
                         ),
                         SizedBox(width: width * 0.02),
-                        Text(
-                          "Go To Home",
-                          style: TextTheme.of(context).headlineMedium,
-                        ),
+                        Text("Go To Home", style: TextTheme.of(context).headlineMedium),
                       ],
                     ),
                   ),
                   SizedBox(height: height * 0.02),
-                  Divider(
-                    height: 3,
-                    color: Theme.of(context).primaryColor,
-                    indent: width * 0.01,
-                    endIndent: width * 0.01,
-                  ),
+                  Divider(height: 3, color: Theme.of(context).primaryColor, indent: width * 0.01, endIndent: width * 0.01),
                   SizedBox(height: height * 0.02),
                   Row(
                     children: [
@@ -112,17 +102,13 @@ class _MyDrawerState extends State<MyDrawer> {
                         ),
                       ),
                       SizedBox(width: width * 0.02),
-                      Text(
-                        "Theme",
-                        style: TextTheme.of(context).headlineMedium,
-                      ),
+                      Text("Theme", style: TextTheme.of(context).headlineMedium),
                     ],
                   ),
                   SizedBox(height: height * 0.02),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     width: width,
-                    alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardColor,
                       border: Border.all(width: 1, color: primaryLight),
@@ -134,41 +120,25 @@ class _MyDrawerState extends State<MyDrawer> {
                         isExpanded: true,
                         dropdownColor: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(12),
-                        icon: Icon(
-                          Icons.arrow_drop_down,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        items:
-                            ['Light', 'Dark'].map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: TextTheme.of(context).headlineSmall,
-                                ),
-                              );
-                            }).toList(),
+                        icon: Icon(Icons.arrow_drop_down, color: Theme.of(context).primaryColor),
+                        items: ['Light', 'Dark'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value, style: TextTheme.of(context).headlineSmall),
+                          );
+                        }).toList(),
                         onChanged: (String? newValue) {
                           if (newValue == null) return;
                           setState(() {
                             selectedTheme = newValue;
                           });
-                          if (newValue == 'Dark') {
-                            themeProvider.setDark();
-                          } else {
-                            themeProvider.setLight();
-                          }
+                          newValue == 'Dark' ? themeProvider.setDark() : themeProvider.setLight();
                         },
                       ),
                     ),
                   ),
                   SizedBox(height: height * 0.02),
-                  Divider(
-                    height: 3,
-                    color: Theme.of(context).primaryColor,
-                    indent: width * 0.01,
-                    endIndent: width * 0.01,
-                  ),
+                  Divider(height: 3, color: Theme.of(context).primaryColor, indent: width * 0.01, endIndent: width * 0.01),
                   SizedBox(height: height * 0.02),
                   InkWell(
                     onTap: () {
@@ -186,28 +156,31 @@ class _MyDrawerState extends State<MyDrawer> {
                           ),
                         ),
                         SizedBox(width: width * 0.02),
-                        Text(
-                          "Chatbot AI",
-                          style: TextTheme.of(context).headlineMedium,
-                        ),
+                        Text("Chatbot AI", style: TextTheme.of(context).headlineMedium),
                       ],
                     ),
                   ),
+                  SizedBox(height: height * 0.02),
+                  Divider(height: 3, color: Theme.of(context).primaryColor, indent: width * 0.01, endIndent: width * 0.01),
+                  SizedBox(height: height * 0.02),
+                  Row(
+                    children: [
+                      Text("Emergency Contacts", style: TextTheme.of(context).headlineMedium),
+                    ],
+                  ),
+                  SizedBox(height: height * 0.005),
+
+                  _contactTile("Police", "122", width,Icons.local_police_sharp),
+                  _contactTile("Ambulance", "123", width,Icons.local_hospital_sharp),
+                  _contactTile("Customer Service", "19911", width,Icons.miscellaneous_services_sharp),
                 ],
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(
-              left: width * 0.05,
-              right: width * 0.05,
-              bottom: height * 0.03,
-            ),
+            padding: EdgeInsets.only(left: width * 0.05, right: width * 0.05, bottom: height * 0.03),
             child: CustomButton(
-              body: Text(
-                "Logout",
-                style: GoogleFonts.inter(color: Colors.white),
-              ),
+              body: Text("Logout", style: GoogleFonts.inter(color: Colors.white)),
               color: Colors.white,
               backgroundColor: Colors.red,
               onPressed: () async {
@@ -223,28 +196,62 @@ class _MyDrawerState extends State<MyDrawer> {
   void _confirmLogout() {
     showDialog(
       context: context,
-      builder:
-          (_) => AlertDialog(
-            title: const Text('Confirm Logout'),
-            content: const Text('Are you sure you want to log out?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () async {
-                  await SharedPrefService.instance.clearToken();
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    RouteNames.login,
-                    (route) => false,
-                  );
-                },
-                child: const Text('Logout'),
-              ),
-            ],
+      builder: (_) => AlertDialog(
+        title: const Text('Confirm Logout'),
+        content: const Text('Are you sure you want to log out?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
           ),
+          TextButton(
+            onPressed: () async {
+              await SharedPrefService.instance.clearToken();
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                RouteNames.login,
+                    (route) => false,
+              );
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
     );
   }
+
+  Widget _contactTile(String title, String number, double width, IconData icon) {
+    return InkWell(
+      onTap: () => _makePhoneCall(number),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Row(
+          children: [
+            Icon(icon, color: Theme.of(context).primaryColor, size: width * 0.07),
+            SizedBox(width: width * 0.03),
+            Text("$title - $number", style: TextTheme.of(context).bodySmall),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(scheme: 'tel', path: phoneNumber);
+    try {
+      if (await canLaunchUrl(launchUri)) {
+        await launchUrl(launchUri);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Cannot launch dialer for $phoneNumber')),
+        );
+      }
+    } catch (e) {
+      // rethrow;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
+  }
+
 }

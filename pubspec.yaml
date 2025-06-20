@@ -59,6 +59,8 @@ dependencies:
   path: ^1.8.3
   introduction_screen: ^3.1.17
   flutter_launcher_icons: ^0.14.4
+  url_launcher: ^6.2.5
+
 
 dev_dependencies:
   flutter_test:

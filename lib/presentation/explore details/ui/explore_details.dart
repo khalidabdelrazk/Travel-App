@@ -26,7 +26,6 @@ class _ExploreDetailsState extends State<ExploreDetails> {
 
   int currentImageIndex = 0;
   late PageController pageController;
-  late Timer autoScrollTimer;
 
   late int temperature;
   bool isScreenLoading = true;
@@ -54,8 +53,6 @@ class _ExploreDetailsState extends State<ExploreDetails> {
         {"icon": Icons.attach_money_rounded, "value": '${data?.price}'},
       ];
 
-      startAutoScroll();
-
       tripDetailsViewModel.isTripFav(data!.id ?? '').then((isFav) {
         if (mounted) {
           setState(() {
@@ -76,17 +73,8 @@ class _ExploreDetailsState extends State<ExploreDetails> {
     }
   }
 
-  void startAutoScroll() {
-    autoScrollTimer = Timer.periodic(const Duration(seconds: 3), (_) {
-      if (!mounted || data?.photos == null || data!.photos!.isEmpty) return;
-      final nextPage = (currentImageIndex + 1) % data!.photos!.length;
-      pageController.animateToPage(nextPage, duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
-    });
-  }
-
   @override
   void dispose() {
-    autoScrollTimer.cancel();
     pageController.dispose();
     super.dispose();
   }
@@ -99,7 +87,11 @@ class _ExploreDetailsState extends State<ExploreDetails> {
         if (state is DetailsSuccessState) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.response.message!)));
         } else if (state is DetailsErrorState) {
-          DialogUtils.showMessage(context: context, message: 'Error: ${state.errorMessage}');
+          DialogUtils.showMessage(
+            context: context,
+            message: 'Error: ${state.errorMessage}',
+            posActionName: 'Ok',
+          );
           setState(() {
             tripDetailsViewModel.toggleFav = !tripDetailsViewModel.toggleFav;
           });
