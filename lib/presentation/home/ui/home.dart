@@ -11,7 +11,6 @@ import '../../../core/di/di.dart';
 import '../../../core/theme/color.dart';
 import '../../../core/utils/data.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -21,15 +20,39 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   late final HomeViewModel homeViewModel = getIt<HomeViewModel>();
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   homeViewModel.getTrips();
+  //   homeViewModel.getCategoryTrips("beach");
+  //   homeViewModel.getCategoryTrips("mountain");
+  //   homeViewModel.getCategoryTrips("ancient");
+  //   homeViewModel.getCategoryTrips("wonder");
+  // }
+
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    homeViewModel.getTrips();
-    homeViewModel.getCategoryTrips("beach");
-    homeViewModel.getCategoryTrips("mountain");
-    homeViewModel.getCategoryTrips("ancient");
-    homeViewModel.getCategoryTrips("wonder");
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    homeViewModel.mostPopTrips.isNotEmpty ? null : homeViewModel.getTrips();
+    homeViewModel.categories['beach']!.isNotEmpty
+        ? null
+        : homeViewModel.getCategoryTrips("beach");
+
+    homeViewModel.categories['mountain']!.isNotEmpty
+        ? null
+        : homeViewModel.getCategoryTrips("mountain");
+
+    homeViewModel.categories['ancient']!.isNotEmpty
+        ? null
+        : homeViewModel.getCategoryTrips("ancient");
+
+    homeViewModel.categories['wonder']!.isNotEmpty
+        ? null
+        : homeViewModel.getCategoryTrips("wonder");
+
+    ;
   }
 
   late double height;
@@ -112,7 +135,11 @@ class HomePageState extends State<HomePage> {
                 child: PopularItem(
                   data: homeViewModel.mostPopTrips[index],
                   onTap: () {
-                    Navigator.pushNamed(context, RouteNames.exploreDetails,arguments: homeViewModel.mostPopTrips[index]);
+                    Navigator.pushNamed(
+                      context,
+                      RouteNames.exploreDetails,
+                      arguments: homeViewModel.mostPopTrips[index],
+                    );
                   },
                 ),
               ),

@@ -20,4 +20,10 @@ abstract class ApiEndPoints {
       "${ApiConstants.baseUrl}/user/addwishlist/$tripId";
   static String notFav(String tripId) =>
       "${ApiConstants.baseUrl}/trip/deletewishlist/$tripId";
+
+  static String bookTrip(String tripId) =>
+      "${ApiConstants.baseUrl}/book/$tripId";
+  static String bookHotel(String hotelId) =>
+      "${ApiConstants.baseUrl}/bookhotel/$hotelId";
+
 }

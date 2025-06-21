@@ -2,31 +2,31 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:injectable/injectable.dart';
-import 'package:travel/presentation/explore%20details/data/Models/fav_response_dm.dart';
-import '../../../../../../../core/api manager/api_endpoints.dart';
-import '../../../../../../../core/api manager/api_manager.dart';
-import '../../../../../../../core/error/failures.dart';
-import '../../../../../core/utils/shared_pref_services.dart';
-import '../trip_details_remote_data_source.dart';
+import 'package:travel/core/api%20manager/api_manager.dart';
+import 'package:travel/core/error/failures.dart';
+import 'package:travel/presentation/explore%20details/data/Data%20Sources/book%20now/book_now_data_source.dart';
+import 'package:travel/presentation/explore%20details/data/Models/book_now_response_dm.dart';
+import '../../../../../../core/api manager/api_endpoints.dart';
+import '../../../../../../core/utils/shared_pref_services.dart';
 
-@Injectable(as: TripDetailsRemoteDataSource)
-class TripDetailsRemoteDataSourceImpl implements TripDetailsRemoteDataSource {
-  final ApiManager apiManager;
-  TripDetailsRemoteDataSourceImpl({required this.apiManager});
 
+@Injectable(as: BookNowDataSource)
+class BookNowDataSourceImpl extends BookNowDataSource{
+  ApiManager apiManager;
+  BookNowDataSourceImpl({required this.apiManager});
   @override
-  Future<Either<Failures, FavResponseDm>> fav(
-    String? tripId,
-    bool setFav,
-  ) async {
-    if (setFav) {
-      return _addToFav(tripId);
+  Future<Either<Failures, BookNowResponseDm>> bookNow(
+      String tripId,
+      String type,
+      ) async {
+    if (type == 'hotel') {
+      return _bookHotel(tripId);
     } else {
-      return _deleteFromFav(tripId);
+      return _bookTrip(tripId);
     }
   }
 
-  Future<Either<Failures, FavResponseDm>> _addToFav(String? tripId) async {
+  Future<Either<Failures, BookNowResponseDm>> _bookHotel(String hotelId) async {
     final connectivityResult = await Connectivity().checkConnectivity();
     try {
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
@@ -38,7 +38,7 @@ class TripDetailsRemoteDataSourceImpl implements TripDetailsRemoteDataSource {
         }
 
         final response = await apiManager.postData(
-          path: ApiEndPoints.setFav(tripId!),
+          path: ApiEndPoints.bookHotel(hotelId),
           options: Options(
             headers: {
               'Content-Type': 'application/json',
@@ -48,22 +48,21 @@ class TripDetailsRemoteDataSourceImpl implements TripDetailsRemoteDataSource {
           ),
         );
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          final FavResponseDm favResponseDm = FavResponseDm.fromJson(
+          final BookNowResponseDm bookNowResponseDm = BookNowResponseDm.fromJson(
             response.data,
           );
-          return Right(favResponseDm);
+          return Right(bookNowResponseDm);
         }
-        return Left(ServerError(errorMessage: 'Too much requests'));
+        return Left(ServerError(errorMessage: response.data.message!));
       } else {
         return Left(NetworkError(errorMessage: "No internet connection"));
       }
     } catch (e) {
-      // rethrow;
       return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
     }
   }
 
-  Future<Either<Failures, FavResponseDm>> _deleteFromFav(String? tripId) async {
+  Future<Either<Failures, BookNowResponseDm>> _bookTrip(String tripId) async {
     final connectivityResult = await Connectivity().checkConnectivity();
     try {
       if (connectivityResult.contains(ConnectivityResult.wifi) ||
@@ -74,8 +73,8 @@ class TripDetailsRemoteDataSourceImpl implements TripDetailsRemoteDataSource {
           return Left(ServerError(errorMessage: "Invalid Token"));
         }
 
-        final response = await apiManager.deleteData(
-          path: ApiEndPoints.notFav(tripId!),
+        final response = await apiManager.postData(
+          path: ApiEndPoints.bookTrip(tripId),
           options: Options(
             headers: {
               'Content-Type': 'application/json',
@@ -85,18 +84,18 @@ class TripDetailsRemoteDataSourceImpl implements TripDetailsRemoteDataSource {
           ),
         );
         if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          final FavResponseDm favResponseDm = FavResponseDm.fromJson(
+          final BookNowResponseDm bookNowResponseDm = BookNowResponseDm.fromJson(
             response.data,
           );
-          return Right(favResponseDm);
+          return Right(bookNowResponseDm);
         }
-        return Left(ServerError(errorMessage: 'Too much requests'));
+        return Left(ServerError(errorMessage: response.statusCode.toString()));
       } else {
         return Left(NetworkError(errorMessage: "No internet connection"));
       }
     } catch (e) {
-      // rethrow;
       return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
     }
   }
+
 }

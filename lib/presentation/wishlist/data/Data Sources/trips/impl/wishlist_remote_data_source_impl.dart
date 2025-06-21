@@ -52,7 +52,7 @@ class WishlistRemoteDataSourceImpl implements WishlistRemoteDataSource {
       }
     } catch (e) {
       // rethrow;
-      return Left(ServerError(errorMessage: e.toString()));
+      return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
     }
   }
 }

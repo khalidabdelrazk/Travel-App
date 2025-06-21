@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_states.dart';
 import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_view_model.dart';
+import 'package:travel/presentation/explore%20details/ui/widgets/book_now.dart';
 import 'package:travel/presentation/explore%20details/ui/widgets/explore_details_body.dart';
 import 'package:travel/presentation/trips/domain/Entity/explore_response_entity.dart';
 import 'package:travel/core/common/dialog_utils.dart';
 import 'package:travel/core/di/di.dart';
+
+import 'cubit/book_view_model.dart';
 
 class ExploreDetails extends StatefulWidget {
   const ExploreDetails({super.key});
@@ -72,6 +75,7 @@ class _ExploreDetailsState extends State<ExploreDetails> {
       });
     }
   }
+  bool isWishlistChanged = false;
 
   @override
   void dispose() {
@@ -81,56 +85,73 @@ class _ExploreDetailsState extends State<ExploreDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TripDetailsViewModel, TripDetailsStates>(
-      bloc: tripDetailsViewModel,
-      listener: (context, state) {
-        if (state is DetailsSuccessState) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.response.message!)));
-        } else if (state is DetailsErrorState) {
-          DialogUtils.showMessage(
-            context: context,
-            message: 'Error: ${state.errorMessage}',
-            posActionName: 'Ok',
-          );
-          setState(() {
-            tripDetailsViewModel.toggleFav = !tripDetailsViewModel.toggleFav;
-          });
-        }
+    double height = MediaQuery.of(context).size.height;
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, true);
+        return false;
       },
-      child: isScreenLoading
-          ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-          : data == null
-          ? const Scaffold(body: Center(child: Text("No data provided")))
-          : Scaffold(
-        appBar: AppBar(
-          surfaceTintColor: Theme.of(context).cardColor,
-          backgroundColor: Theme.of(context).cardColor,
-          elevation: 6,
-          centerTitle: true,
-          shadowColor: Colors.black.withOpacity(0.1),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
+      child: BlocListener<TripDetailsViewModel, TripDetailsStates>(
+        bloc: tripDetailsViewModel,
+        listener: (context, state) {
+          if (state is DetailsSuccessState) {
+            isWishlistChanged = true;
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.response.message!)));
+          } else if (state is DetailsErrorState) {
+            DialogUtils.showMessage(
+              context: context,
+              message: 'Error: ${state.errorMessage}',
+              posActionName: 'Ok',
+            );
+            setState(() {
+              tripDetailsViewModel.toggleFav = !tripDetailsViewModel.toggleFav;
+            });
+          }
+        },
+        child: isScreenLoading
+            ? const Scaffold(body: Center(child: CircularProgressIndicator()))
+            : data == null
+            ? const Scaffold(body: Center(child: Text("No data provided")))
+            : Scaffold(
+          appBar: AppBar(
+            surfaceTintColor: Theme.of(context).cardColor,
+            backgroundColor: Theme.of(context).cardColor,
+            elevation: 6,
+            centerTitle: true,
+            shadowColor: Colors.black.withOpacity(0.1),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
+            ),
+            title: Text(
+              data?.name ?? "",
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextTheme.of(context).bodySmall,
+            ),
           ),
-          title: Text(
-            data?.name ?? "",
-            maxLines: 2,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            style: TextTheme.of(context).bodySmall,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: BlocProvider<BookNowViewModel>(
+            create: (_) => getIt<BookNowViewModel>(),
+            child: BookNow(
+              tripId: data?.id ?? " ",
+              type: data?.type ?? 'hotel',
+            ),
           ),
-        ),
-        body: ExploreDetailsBody(
-          context: context,
-          data: data!,
-          width: width,
-          height: height,
-          tripInfo: tripInfo,
-          viewModel: tripDetailsViewModel,
-          pageController: pageController,
-          currentImageIndex: currentImageIndex,
-          onImageIndexChanged: (index) {
-            setState(() => currentImageIndex = index);
-          },
+      
+          body: ExploreDetailsBody(
+            context: context,
+            data: data!,
+            width: width,
+            height: height,
+            tripInfo: tripInfo,
+            viewModel: tripDetailsViewModel,
+            pageController: pageController,
+            currentImageIndex: currentImageIndex,
+            onImageIndexChanged: (index) {
+              setState(() => currentImageIndex = index);
+            },
+          ),
         ),
       ),
     );

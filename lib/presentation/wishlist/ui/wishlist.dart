@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel/core/di/di.dart';
+import 'package:travel/presentation/home/domain/Entity/trips_response_entity.dart';
 import 'package:travel/presentation/wishlist/ui/cubit/wishlist_states.dart';
 import 'package:travel/presentation/wishlist/ui/cubit/wishlist_view_model.dart';
 import 'package:travel/presentation/wishlist/ui/widgets/wish_trips_card.dart';
+
+import '../../../core/routes/route_names.dart';
+import '../domain/Entity/wishlist_response_entity.dart';
 
 class Wishlist extends StatefulWidget {
   const Wishlist({super.key});
@@ -70,13 +74,7 @@ class _WishlistState extends State<Wishlist> {
                     ),
                     child: WishTripsCard(
                       trip: trip,
-                      onPress: () {
-                        // Navigator.pushNamed(
-                        //   context,
-                        //   RouteNames.exploreDetails,
-                        //   arguments: trip,
-                        // );
-                      },
+                      onPress: () => onTap(trip),
                       onFavTap: () async {
                         await wishlistViewModel.removeFromWishList(trip.id!);
                       },
@@ -90,4 +88,16 @@ class _WishlistState extends State<Wishlist> {
       },
     );
   }
+
+  Future<void> onTap(WishlistResponseEntity data)async{
+      final result = await Navigator.pushNamed(
+        context,
+        RouteNames.exploreDetails,
+        arguments: data,
+      );
+
+      if (result == true) {
+        wishlistViewModel.getWishlist();
+      }
+    }
 }

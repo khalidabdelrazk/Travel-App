@@ -47,16 +47,28 @@ import '../../presentation/chatbot/domain/repository/chatbot_repository.dart'
 import '../../presentation/chatbot/domain/use%20cases/chatbot_use_cases.dart'
     as _i959;
 import '../../presentation/chatbot/ui/cubit/chatbot_view_model.dart' as _i1069;
+import '../../presentation/explore%20details/data/Data%20Sources/book%20now/book_now_data_source.dart'
+    as _i253;
+import '../../presentation/explore%20details/data/Data%20Sources/book%20now/impl/book_now_data_source_impl.dart'
+    as _i378;
 import '../../presentation/explore%20details/data/Data%20Sources/impl/trip_details_remote_data_source_impl.dart'
     as _i799;
 import '../../presentation/explore%20details/data/Data%20Sources/trip_details_remote_data_source.dart'
     as _i720;
+import '../../presentation/explore%20details/data/Repository/book_now_repository_impl.dart'
+    as _i1035;
 import '../../presentation/explore%20details/data/Repository/trip_details_repository_impl.dart'
     as _i929;
+import '../../presentation/explore%20details/domain/Repository/book_now_repository.dart'
+    as _i663;
 import '../../presentation/explore%20details/domain/Repository/trip_details_repository.dart'
     as _i91;
+import '../../presentation/explore%20details/domain/Use%20Case/book_now_use_case.dart'
+    as _i425;
 import '../../presentation/explore%20details/domain/Use%20Case/trip_details_use_case.dart'
     as _i536;
+import '../../presentation/explore%20details/ui/cubit/book_view_model.dart'
+    as _i137;
 import '../../presentation/explore%20details/ui/cubit/trip_details_view_model.dart'
     as _i719;
 import '../../presentation/home/data/Data%20Sources/trips/home_trips_remote_data_source.dart'
@@ -129,6 +141,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i623.ChatbotDataSource>(
       () => _i336.ChatbotDataSourceImpl(apiManager: gh<_i949.ApiManager>()),
     );
+    gh.factory<_i253.BookNowDataSource>(
+      () => _i378.BookNowDataSourceImpl(apiManager: gh<_i949.ApiManager>()),
+    );
     gh.factory<_i765.ChatbotRepository>(
       () => _i62.ChatbotRepositoryImpl(gh<_i623.ChatbotDataSource>()),
     );
@@ -163,6 +178,9 @@ extension GetItInjectableX on _i174.GetIt {
         wishlistRepository: gh<_i398.WishlistRepository>(),
       ),
     );
+    gh.factory<_i137.BookNowViewModel>(
+      () => _i137.BookNowViewModel(bookNowUseCase: gh<_i425.BookNowUseCase>()),
+    );
     gh.factory<_i712.CategoryUseCase>(
       () => _i712.CategoryUseCase(
         homeTripsRepository: gh<_i583.HomeTripsRepository>(),
@@ -194,6 +212,11 @@ extension GetItInjectableX on _i174.GetIt {
         administratorRepository: gh<_i692.AdministratorRepository>(),
       ),
     );
+    gh.factory<_i663.BookNowRepository>(
+      () => _i1035.BookNowRepositoryImpl(
+        bookNowDataSource: gh<_i253.BookNowDataSource>(),
+      ),
+    );
     gh.factory<_i1012.ExploreRepository>(
       () => _i1011.ExploreRepositoryImpl(
         gh<_i694.HotelsRemoteDataSource>(),
@@ -210,6 +233,9 @@ extension GetItInjectableX on _i174.GetIt {
         wishlistUseCase: gh<_i180.WishlistUseCase>(),
         tripDetailsUseCase: gh<_i536.TripDetailsUseCase>(),
       ),
+    );
+    gh.factory<_i425.BookNowUseCase>(
+      () => _i425.BookNowUseCase(bookNowRepository: gh<_i663.BookNowRepository>()),
     );
     gh.factory<_i959.ChatbotUseCases>(
       () => _i959.ChatbotUseCases(

@@ -36,7 +36,7 @@ class HomeTripsRemoteDataSourceImpl implements HomeTripsRemoteDataSource {
         return Left(NetworkError(errorMessage: "No internet connection"));
       }
     } catch (e) {
-      return Left(ServerError(errorMessage: e.toString()));
+      return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
     }
   }
 
@@ -67,7 +67,7 @@ class HomeTripsRemoteDataSourceImpl implements HomeTripsRemoteDataSource {
         return Left(NetworkError(errorMessage: "No internet connection"));
       }
     } catch (e) {
-      return Left(ServerError(errorMessage: e.toString()));
+      return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
     }
   }
 }

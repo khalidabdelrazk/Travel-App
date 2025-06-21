@@ -60,7 +60,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return Left(NetworkError(errorMessage: "Network Error"));
       }
     } catch (e) {
-      return Left(ServerError(errorMessage: e.toString()));
+      return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
     }
   }
 
@@ -97,7 +97,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return Left(NetworkError(errorMessage: "Network Error"));
       }
     } catch (e) {
-      return Left(ServerError(errorMessage: e.toString()));
+      return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
     }
   }
 
@@ -133,7 +133,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return Left(NetworkError(errorMessage: "Network Error"));
       }
     } catch (e) {
-      return Left(ServerError(errorMessage: e.toString()));
+      return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
     }
   }
 }

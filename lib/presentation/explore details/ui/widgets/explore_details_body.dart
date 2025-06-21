@@ -3,13 +3,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/presentation/explore%20details/ui/widgets/book_now.dart';
 import 'package:travel/presentation/trips/domain/Entity/explore_response_entity.dart';
 import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_view_model.dart';
 
 import '../../../../core/common/category_item.dart';
 import '../../../../core/theme/color.dart';
 import 'image_slider.dart';
-
 
 class ExploreDetailsBody extends StatefulWidget {
   final BuildContext context;
@@ -54,8 +54,10 @@ class _ExploreDetailsBodyState extends State<ExploreDetailsBody> {
 
   void startAutoScroll() {
     autoScrollTimer = Timer.periodic(const Duration(seconds: 3), (_) {
-      if (!mounted || widget.data.photos == null || widget.data.photos!.isEmpty) return;
-      final nextPage = (widget.currentImageIndex + 1) % widget.data.photos!.length;
+      if (!mounted || widget.data.photos == null || widget.data.photos!.isEmpty)
+        return;
+      final nextPage =
+          (widget.currentImageIndex + 1) % widget.data.photos!.length;
       widget.pageController.animateToPage(
         nextPage,
         duration: const Duration(milliseconds: 500),
@@ -69,6 +71,7 @@ class _ExploreDetailsBodyState extends State<ExploreDetailsBody> {
     autoScrollTimer?.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -92,18 +95,16 @@ class _ExploreDetailsBodyState extends State<ExploreDetailsBody> {
                 SizedBox(height: widget.height * 0.02),
                 placeInfo(),
                 SizedBox(height: widget.height * 0.02),
-                Text('Description', style: TextTheme.of(context).headlineMedium),
-                Text(widget.data.description ?? '', style: TextTheme.of(context).bodyMedium),
-                SizedBox(height: widget.height * 0.02),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-                    backgroundColor: Theme.of(context).cardColor,
-                  ),
-                  child: const Text("Book Now"),
+                Text(
+                  'Description',
+                  style: TextTheme.of(context).headlineMedium,
                 ),
-                SizedBox(height: widget.height * 0.02),
+                Text(
+                  widget.data.description ?? '',
+                  style: TextTheme.of(context).bodyMedium,
+                ),
+                // SizedBox(height: widget.height * 0.02),
+                SizedBox(height: 70,)
               ],
             ),
           ),
@@ -120,7 +121,10 @@ class _ExploreDetailsBodyState extends State<ExploreDetailsBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.data.name ?? '', style: Theme.of(widget.context).textTheme.headlineMedium),
+              Text(
+                widget.data.name ?? '',
+                style: Theme.of(widget.context).textTheme.headlineMedium,
+              ),
               Row(
                 children: [
                   const Icon(Icons.location_on, size: 15),
@@ -144,9 +148,15 @@ class _ExploreDetailsBodyState extends State<ExploreDetailsBody> {
             return IconButton(
               onPressed: () {
                 widget.viewModel.toggleFav = !isFav;
-                widget.viewModel.addToFav(widget.data.id ?? '', widget.viewModel.toggleFav);
+                widget.viewModel.addToFav(
+                  widget.data.id ?? '',
+                  widget.viewModel.toggleFav,
+                );
               },
-              icon: Icon(isFav ? Icons.favorite : Icons.favorite_border, color: Colors.red),
+              icon: Icon(
+                isFav ? Icons.favorite : Icons.favorite_border,
+                color: Colors.red,
+              ),
             );
           },
         ),
@@ -161,9 +171,13 @@ class _ExploreDetailsBodyState extends State<ExploreDetailsBody> {
       padding: const EdgeInsets.only(bottom: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: widget.tripInfo
-            .map((info) => CategoryItem(data: info, color: listColors[index++ % 10]))
-            .toList(),
+        children:
+            widget.tripInfo
+                .map(
+                  (info) =>
+                      CategoryItem(data: info, color: listColors[index++ % 10]),
+                )
+                .toList(),
       ),
     );
   }

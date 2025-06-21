@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
       darkTheme: AppTheme().darkTheme,
       themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
       routes: Routes.routes,
-      // home: AdminTourScreen(),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:travel/presentation/explore%20details/domain/Entity/fav_response_entity.dart';
 
+import '../../domain/Entity/book_now_response_entity.dart';
+
 abstract class TripDetailsStates {}
 
 class DetailsInitState extends TripDetailsStates {}
@@ -20,3 +22,5 @@ class FavOrNotState extends TripDetailsStates {
   bool isFav;
   FavOrNotState({required this.isFav});
 }
+
+

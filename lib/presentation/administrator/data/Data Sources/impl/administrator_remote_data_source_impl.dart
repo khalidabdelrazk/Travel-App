@@ -103,7 +103,7 @@ class AdministratorRemoteDataSourceImpl
         return Left(NetworkError(errorMessage: "No internet connection"));
       }
     } catch (e) {
-      return Left(ServerError(errorMessage: e.toString()));
+      return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
     }
   }
 
@@ -157,46 +157,7 @@ class AdministratorRemoteDataSourceImpl
         return Left(NetworkError(errorMessage: "No internet connection"));
       }
     } catch (e) {
-      return Left(ServerError(errorMessage: e.toString()));
+      return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
     }
   }
 }
-
-/*
-final connectivityResult = await Connectivity().checkConnectivity();
-    try {
-      if (connectivityResult.contains(ConnectivityResult.wifi) ||
-          connectivityResult.contains(ConnectivityResult.mobile)) {
-        final token = SharedPrefService.instance.getToken();
-
-        if (token == null) {
-          return Left(ServerError(errorMessage: "Invalid Token"));
-        }
-
-        final response = await apiManager.deleteData(
-          path: ApiEndPoints.notFav(tripId!),
-          options: Options(
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer $token',
-            },
-            validateStatus: (status) => true,
-          ),
-        );
-        print(response.data);
-        if (response.statusCode! >= 200 && response.statusCode! < 300) {
-          final TourResponseDm tourResponseDm = TourResponseDm.fromJson(
-            response.data,
-          );
-          return Right(tourResponseDm);
-        }
-        return Left(ServerError(errorMessage: response.data.message));
-      } else {
-        return Left(NetworkError(errorMessage: "No internet connection"));
-      }
-    } catch (e) {
-      // rethrow;
-      return Left(ServerError(errorMessage: e.toString()));
-    }
-  }
- */
