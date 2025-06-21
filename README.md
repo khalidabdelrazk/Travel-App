@@ -1,4 +1,4 @@
-# 🧳 Travel App
+# 🧳 Travel Assistant
 
 A beautifully designed Flutter application focused on discovering and booking **trips and hotels in Egypt**, built with **Clean Architecture** and **MVVM** pattern using **BLoC** for state management.
 
