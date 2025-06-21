@@ -46,8 +46,6 @@ A beautifully designed Flutter application focused on discovering and booking **
 
 ## 📱 UI Previews
 
-## 📱 UI Previews
-
 | Dark Mode                                                                 | Light Mode                                                                |
 |---------------------------------------------------------------------------|---------------------------------------------------------------------------|
 | ![1dark](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1dark.png)         | ![1light](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1light.png)         |
@@ -63,8 +61,9 @@ A beautifully designed Flutter application focused on discovering and booking **
 | ![3dark8](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark8.png)       | ![3light8](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light8.png)       |
 | ![3dark9](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark9.png)       | ![3light9](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light9.png)       |
 | ![3dark10](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark10.png)     | ![3light10](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light10.png)     |
-| ![final](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/final.png)         | —                                                                         |
-
+<div align="center">
+  <img src="https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/final.png" width="300" alt=" "/>
+</div>
 
 > ✅ All screenshots are located in the `_iphone photos` directory.
 
@@ -135,3 +134,9 @@ git clone https://github.com/khalidabdelrazk/Travel-App.git
 cd Travel-App
 flutter pub get
 flutter run
+
+
+## 💡 Contribution
+
+Feel free to **fork** the project and **submit a pull request**.  
+For major changes, please **open an issue first** to discuss what you would like to change.
