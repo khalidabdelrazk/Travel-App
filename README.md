@@ -48,7 +48,11 @@ A beautifully designed Flutter application focused on discovering and booking **
 
 | Dark Mode                                           | Light Mode                                          |
 |-----------------------------------------------------|-----------------------------------------------------|
-| ![1dark](E:\_iphone photos\1dark.png)               | ![1light](E:\_iphone photos\1light.png)             |
+| <img 
+    src="https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1dark.png" 
+    alt="App Dark Mode Screenshot"
+    class="responsive-img"
+>          | ![1light](E:\_iphone photos\1light.png)             |
 | ![1onboarding1](E:\_iphone photos\1onboarding1.png) | ![1onboarding1](E:\_iphone photos\1onboarding1.png) |
 | ![2dark1](E:\_iphone photos\2dark1.png)             | ![2light1](E:\_iphone photos\2light1.png)           |
 | ![2dark2](E:\_iphone photos\2dark2.png)             | ![2light2](E:\_iphone photos\2light2.png)           |
