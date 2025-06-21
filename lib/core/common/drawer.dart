@@ -198,7 +198,7 @@ class _MyDrawerState extends State<MyDrawer> {
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('Confirm Logout'),
-        content: const Text('Are you sure you want to log out?'),
+        content: const Text('Are you sure you want to logout?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
