@@ -41,15 +41,15 @@ class ChatbotDataSourceImpl implements ChatbotDataSource {
           final chatbotResponse = ChatbotResponseDm(response: chatbotText);
           return Right(chatbotResponse);
         } else {
-          return Left(ServerError(errorMessage: "Invalid response format"));
+          return Left(ServerError(errorMessage: 'Network Error, Please Try again'));
         }
       } else {
         return Left(
-          ServerError(errorMessage: "Server error: ${response.statusCode}"),
+          ServerError(errorMessage: 'Network Error, Please Try again'),
         );
       }
     } catch (e) {
-      return Left(ServerError(errorMessage: 'Unhandled Error, Please Try again'));
+      return Left(ServerError(errorMessage: 'Network Error, Please Try again'));
     }
   }
 }
