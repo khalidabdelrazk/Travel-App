@@ -93,15 +93,35 @@ A beautifully designed Flutter application focused on discovering and booking **
 
 ### Installation
 
-```bash
-git clone https://github.com/khalidabdelrazk/Travel-App.git
-cd Travel-App
-flutter pub get
-flutter run
+1.  **Clone the repository**:
+
+    ```bash
+    git clone [https://github.com/khalidabdelrazk/Travel-App.git](https://github.com/khalidabdelrazk/Travel-App.git)
+    ```
+
+2.  **Navigate to the project directory**:
+
+    ```bash
+    cd Travel-App
+    ```
+
+3.  **Get Flutter dependencies**:
+
+    ```bash
+    flutter pub get
+    ```
+
+4.  **Run the application**:
+
+    ```bash
+    flutter run
+    ```
 
 ---
 
-### 🧩 Packages Used
+## 🧩 Packages Used
+
+The following key packages were utilized in the development of this application:
 
 ```yaml
 dependencies:
@@ -122,7 +142,7 @@ dependencies:
   get_it: ^8.0.3
   injectable: ^2.5.0
   connectivity_plus: ^6.1.4
-  image_picker:
+  image_picker: ^1.1.2
   permission_handler: ^11.3.1
   device_info_plus: ^10.0.1
   flutter_rating_bar: ^4.0.1
@@ -137,8 +157,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  injectable_generator:
-  build_runner:
+  injectable_generator: ^2.6.1
+  build_runner: ^2.4.11
 
 
 
