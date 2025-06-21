@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:travel/core/di/di.dart';
 import 'package:travel/presentation/home/ui/cubit/most%20popular/most_popular_view_model.dart';
+import '../../../../core/common/network_error_widget.dart';
 import '../../../../core/common/popular_item.dart';
 import '../../../../core/routes/route_names.dart';
 import '../cubit/most popular/most_popular_states.dart';
@@ -37,16 +38,10 @@ class _PopularSectionState extends State<PopularSection> {
             child: Center(child: CircularProgressIndicator()),
           );
         } else if (state is MostPopularErrorState) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(state.errorMsg, textAlign: TextAlign.center),
-              TextButton(
-                onPressed: mostPopularViewModel.getTrips,
-                child: Text('Try Again'),
-              ),
-            ],
+          return NetworkErrorWidget(
+            errorMsg: state.errorMsg,
+            large: false,
+            onTap: () async => mostPopularViewModel.getTrips(),
           );
         } else {
           return CarouselSlider(

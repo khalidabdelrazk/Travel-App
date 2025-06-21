@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travel/core/common/network_error_widget.dart';
 import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_states.dart';
 import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_view_model.dart';
 import 'package:travel/presentation/explore%20details/ui/widgets/book_now.dart';
@@ -21,7 +22,8 @@ class ExploreDetails extends StatefulWidget {
 }
 
 class _ExploreDetailsState extends State<ExploreDetails> {
-  late final TripDetailsViewModel tripDetailsViewModel = getIt<TripDetailsViewModel>();
+  late final TripDetailsViewModel tripDetailsViewModel =
+      getIt<TripDetailsViewModel>();
   late double width;
   late double height;
   late List tripInfo;
@@ -51,9 +53,16 @@ class _ExploreDetailsState extends State<ExploreDetails> {
       temperature = getRandomNumberByTime();
 
       tripInfo = [
-        {"icon": Icons.star_rate_rounded, "value": (data?.rating ?? 0).toString()},
+        {
+          "icon": Icons.star_rate_rounded,
+          "value": (data?.rating ?? 0).toString(),
+        },
         {"icon": Icons.wb_sunny_rounded, "value": "$temperature°C"},
-        {"icon": Icons.attach_money_rounded, "value": '${data?.price}${data?.type == 'hotel'? '/Day': '/Person'}'},
+        {
+          "icon": Icons.attach_money_rounded,
+          "value":
+              '${data?.price}${data?.type == 'hotel' ? '/Day' : '/Person'}',
+        },
       ];
 
       tripDetailsViewModel.isTripFav(data!.id ?? '').then((isFav) {
@@ -75,6 +84,7 @@ class _ExploreDetailsState extends State<ExploreDetails> {
       });
     }
   }
+
   bool isWishlistChanged = false;
 
   @override
@@ -82,6 +92,8 @@ class _ExploreDetailsState extends State<ExploreDetails> {
     pageController.dispose();
     super.dispose();
   }
+
+  DetailsErrorState? detailsErrorState;
 
   @override
   Widget build(BuildContext context) {
@@ -96,63 +108,81 @@ class _ExploreDetailsState extends State<ExploreDetails> {
         listener: (context, state) {
           if (state is DetailsSuccessState) {
             isWishlistChanged = true;
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.response.message!)));
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.response.message!)));
           } else if (state is DetailsErrorState) {
-            DialogUtils.showMessage(
-              context: context,
-              message: 'Error: ${state.errorMessage}',
-              posActionName: 'Ok',
-            );
             setState(() {
               tripDetailsViewModel.toggleFav = !tripDetailsViewModel.toggleFav;
+              detailsErrorState = state; // Save the error
             });
           }
         },
-        child: isScreenLoading
-            ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-            : data == null
-            ? const Scaffold(body: Center(child: Text("No data provided")))
-            : Scaffold(
-          appBar: AppBar(
-            surfaceTintColor: Theme.of(context).cardColor,
-            backgroundColor: Theme.of(context).cardColor,
-            elevation: 6,
-            centerTitle: true,
-            shadowColor: Colors.black.withOpacity(0.1),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
-            ),
-            title: Text(
-              data?.name ?? "",
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: TextTheme.of(context).bodySmall,
-            ),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: BlocProvider<BookNowViewModel>(
-            create: (_) => getIt<BookNowViewModel>(),
-            child: BookNow(
-              tripId: data?.id ?? " ",
-              type: data?.type ?? 'hotel',
-            ),
-          ),
-      
-          body: ExploreDetailsBody(
-            context: context,
-            data: data!,
-            width: width,
-            height: height,
-            tripInfo: tripInfo,
-            viewModel: tripDetailsViewModel,
-            pageController: pageController,
-            currentImageIndex: currentImageIndex,
-            onImageIndexChanged: (index) {
-              setState(() => currentImageIndex = index);
-            },
-          ),
-        ),
+
+        child:
+            isScreenLoading
+                ? const Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                )
+                : data == null
+                ? const Scaffold(body: Center(child: Text("No data provided")))
+                : detailsErrorState != null
+                ? Scaffold(
+                  body: NetworkErrorWidget(
+                    errorMsg: detailsErrorState!.errorMessage,
+                    large: true,
+                    onTap: () async {
+                      await tripDetailsViewModel.isTripFav(data?.id ?? "");
+                      setState(() {
+                        detailsErrorState = null;
+                      });
+                    },
+                  ),
+                )
+                : Scaffold(
+                  appBar: AppBar(
+                    surfaceTintColor: Theme.of(context).cardColor,
+                    backgroundColor: Theme.of(context).cardColor,
+                    elevation: 6,
+                    centerTitle: true,
+                    shadowColor: Colors.black.withOpacity(0.1),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(24),
+                      ),
+                    ),
+                    title: Text(
+                      data?.name ?? "",
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextTheme.of(context).bodySmall,
+                    ),
+                  ),
+                  floatingActionButtonLocation:
+                      FloatingActionButtonLocation.centerFloat,
+                  floatingActionButton: BlocProvider<BookNowViewModel>(
+                    create: (_) => getIt<BookNowViewModel>(),
+                    child: BookNow(
+                      tripId: data?.id ?? " ",
+                      type: data?.type ?? 'hotel',
+                    ),
+                  ),
+
+                  body: ExploreDetailsBody(
+                    context: context,
+                    data: data!,
+                    width: width,
+                    height: height,
+                    tripInfo: tripInfo,
+                    viewModel: tripDetailsViewModel,
+                    pageController: pageController,
+                    currentImageIndex: currentImageIndex,
+                    onImageIndexChanged: (index) {
+                      setState(() => currentImageIndex = index);
+                    },
+                  ),
+                ),
       ),
     );
   }

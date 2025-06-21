@@ -5,6 +5,7 @@ import 'package:travel/core/di/di.dart';
 import 'package:travel/presentation/home/ui/cubit/category/category_states.dart';
 import 'package:travel/presentation/home/ui/cubit/category/category_view_model.dart';
 import 'package:travel/presentation/home/ui/widgets/section_with_popular_item.dart';
+import '../../../../core/common/network_error_widget.dart';
 import '../cubit/most popular/most_popular_states.dart';
 
 class CategorySection extends StatefulWidget {
@@ -42,17 +43,10 @@ class _CategorySectionState extends State<CategorySection> {
             child: Center(child: CircularProgressIndicator()),
           );
         } else if (state is CategoryErrorState) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(state.errorMsg, textAlign: TextAlign.center),
-              TextButton(
-                onPressed:
-                    () => categoryViewModel.getCategoryTrips(widget.category),
-                child: Text('Try Again'),
-              ),
-            ],
+          return NetworkErrorWidget(
+            errorMsg: state.errorMsg,
+            large: false,
+            onTap: () => categoryViewModel.getCategoryTrips(widget.category),
           );
         } else {
           return SectionWithPopularItems(

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../../core/common/custom_text_field.dart';
 import '../../../core/common/explore_item.dart';
+import '../../../core/common/network_error_widget.dart';
 import '../../../core/di/di.dart';
 import '../../../core/routes/route_names.dart';
 import 'cubit/explore_states.dart';
@@ -64,12 +65,12 @@ class _ExplorePageState extends State<ExplorePage>
     }
   }
 
-  void _fetchData() {
+  Future<void> _fetchData() async {
     final query = searchController.text.trim();
     if (_tabController.index == 0) {
-      exploreViewModel.getTrips(query);
+      await exploreViewModel.getTrips(query);
     } else {
-      exploreViewModel.getHotels(query);
+      await exploreViewModel.getHotels(query);
     }
   }
 
@@ -158,21 +159,10 @@ class _ExplorePageState extends State<ExplorePage>
         if (state is LoadingState) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is ErrorState) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  state.errorMessage,
-                  style: Theme.of(context).textTheme.labelLarge,
-                ),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: _fetchData,
-                  child: const Text('Try Again'),
-                ),
-              ],
-            ),
+          return NetworkErrorWidget(
+            errorMsg: state.errorMessage,
+            large: false,
+            onTap: _fetchData,
           );
         } else if (state is SuccessState) {
           return Padding(

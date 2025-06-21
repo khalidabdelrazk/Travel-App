@@ -18,7 +18,7 @@ class CategoryViewModel extends Cubit<CategoryStates> {
   CategoryViewModel({required this.categoryUseCase})
     : super(CategoryInitState());
 
-  void getCategoryTrips(String queryParams) async {
+  Future<void> getCategoryTrips(String queryParams) async {
     emit(CategoryLoading(queryParams));
     var either = await categoryUseCase.invoke(queryParams);
     either.fold(

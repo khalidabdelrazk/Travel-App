@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel/presentation/home/ui/widgets/category_section.dart';
 import 'package:travel/presentation/home/ui/widgets/most_popular_section.dart';
-import '../../../core/di/di.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:travel/presentation/explore%20details/domain/Use%20Case/book_now_use_case.dart';
 import 'package:travel/presentation/explore%20details/domain/Use%20Case/trip_details_use_case.dart';
 import 'package:travel/presentation/explore%20details/ui/cubit/trip_details_states.dart';
 import 'package:travel/presentation/wishlist/domain/Use%20Case/wishlist_use_case.dart';

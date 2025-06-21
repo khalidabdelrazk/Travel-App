@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travel/core/utils/data.dart';
 import '../../core/common/bottombar_item.dart';
 import '../../core/common/drawer.dart';
-import '../../core/model/places.dart';
 import '../../core/theme/color.dart';
 import '../../core/utils/constant.dart';
 import '../../presentation/home/ui/home.dart';
@@ -19,7 +17,6 @@ class RootApp extends StatefulWidget {
 class RootAppState extends State<RootApp> with TickerProviderStateMixin {
   int activeTab = 0;
   bool showFloatingActionButton = true;
-  Place popular = places[0];
 
   late final AnimationController _controller = AnimationController(
     duration: Duration(milliseconds: animatedBodyMs),

@@ -6,6 +6,7 @@ import 'package:travel/presentation/wishlist/ui/cubit/wishlist_states.dart';
 import 'package:travel/presentation/wishlist/ui/cubit/wishlist_view_model.dart';
 import 'package:travel/presentation/wishlist/ui/widgets/wish_trips_card.dart';
 
+import '../../../core/common/network_error_widget.dart';
 import '../../../core/routes/route_names.dart';
 import '../domain/Entity/wishlist_response_entity.dart';
 
@@ -25,16 +26,10 @@ class _WishlistState extends State<Wishlist> {
       bloc: wishlistViewModel..getWishlist(),
       builder: (context, state) {
         if (state is ErrorState) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(state.errorMessage,textAlign: TextAlign.center,),
-              TextButton(
-                onPressed: wishlistViewModel.getWishlist,
-                child: Text('Try Again'),
-              ),
-            ],
+          return NetworkErrorWidget(
+            errorMsg: state.errorMessage,
+            large: true,
+            onTap: wishlistViewModel.getWishlist,
           );
         } else if (state is LoadingState &&
             wishlistViewModel.wishlist.isEmpty) {

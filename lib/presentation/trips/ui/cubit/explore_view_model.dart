@@ -13,7 +13,7 @@ class ExploreViewModel extends Cubit<ExploreStates> {
   ExploreViewModel({required this.hotelsUseCase, required this.tripsUseCase})
     : super(InitState());
 
-  void getHotels(String controllerText) async {
+  Future<void> getHotels(String controllerText) async {
     emit(LoadingState());
     var either = await hotelsUseCase.invoke(controllerText);
     either.fold(
@@ -22,7 +22,7 @@ class ExploreViewModel extends Cubit<ExploreStates> {
     );
   }
 
-  void getTrips(String controllerText) async {
+  Future<void> getTrips(String controllerText) async {
     emit(LoadingState());
     var either = await tripsUseCase.invoke(controllerText);
     either.fold(
