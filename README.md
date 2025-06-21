@@ -91,6 +91,14 @@ A beautifully designed Flutter application focused on discovering and booking **
 - Android Studio / VSCode / Xcode
 - A connected device or emulator
 
+---
+
+## 💡 Contribution
+
+Feel free to **fork** the project and **submit a pull request**.  
+For major changes, please **open an issue first** to discuss what you would like to change.
+
+
 ### Installation
 
 1.  **Clone the repository**:
@@ -162,7 +170,4 @@ dev_dependencies:
 
 
 
-## 💡 Contribution
 
-Feel free to **fork** the project and **submit a pull request**.  
-For major changes, please **open an issue first** to discuss what you would like to change.
