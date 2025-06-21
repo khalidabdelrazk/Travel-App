@@ -1,4 +1,4 @@
-# 🧳 Travel App
+# 🧳 Travel Assistant
 
 A beautifully designed Flutter application focused on discovering and booking **trips and hotels in Egypt**, built with **Clean Architecture** and **MVVM** pattern using **BLoC** for state management.
 
@@ -72,6 +72,35 @@ A beautifully designed Flutter application focused on discovering and booking **
 
 ---
 
+## 🧠 Architecture
+
+- 🧱 **Clean Architecture**
+- 🎯 **MVVM Design Pattern**
+- 🗂 **Feature-based Structure**
+- 🧪 **Modular and Testable**
+- 🧪 **Dependency Injection** with `get_it` and `injectable`
+- 🔄 **Offline Support** with caching and error handling
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Flutter SDK (latest stable)
+- Android Studio / VSCode / Xcode
+- A connected device or emulator
+
+### Installation
+
+```bash
+git clone https://github.com/khalidabdelrazk/Travel-App.git
+cd Travel-App
+flutter pub get
+flutter run
+
+---
+
 ## 🧩 Packages Used
 
 ```yaml
@@ -111,32 +140,6 @@ dev_dependencies:
   injectable_generator:
   build_runner:
 
-## 🧠 Architecture
-
-- 🧱 **Clean Architecture**
-- 🎯 **MVVM Design Pattern**
-- 🗂 **Feature-based Structure**
-- 🧪 **Modular and Testable**
-- 🧪 **Dependency Injection** with `get_it` and `injectable`
-- 🔄 **Offline Support** with caching and error handling
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Flutter SDK (latest stable)
-- Android Studio / VSCode / Xcode
-- A connected device or emulator
-
-### Installation
-
-```bash
-git clone https://github.com/khalidabdelrazk/Travel-App.git
-cd Travel-App
-flutter pub get
-flutter run
 
 
 ## 💡 Contribution
