@@ -46,21 +46,24 @@ A beautifully designed Flutter application focused on discovering and booking **
 
 ## 📱 UI Previews
 
-| Dark Mode                                                                 | Light Mode                                                                |
-|---------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| ![1dark](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1dark.png)         | ![1light](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1light.png)         |
-| ![2dark1](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/2dark1.png)       | ![2light1](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/2light1.png)       |
-| ![2dark2](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/2dark2.png)       | ![2light2](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/2light2.png)       |
-| ![3dark1](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark1.png)       | ![3light1](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light1.png)       |
-| ![3dark2](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark2.png)       | ![3light2](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light2.png)       |
-| ![3dark3](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark3.png)       | ![3light3](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light3.png)       |
-| ![3dark4](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark4.png)       | ![3light4](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light4.png)       |
-| ![3dark5](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark5.png)       | ![3light5](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light5.png)       |
-| ![3dark6](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark6.png)       | ![3light6](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light6.png)       |
-| ![3dark7](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark7.png)       | ![3light7](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light7.png)       |
-| ![3dark8](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark8.png)       | ![3light8](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light8.png)       |
-| ![3dark9](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark9.png)       | ![3light9](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light9.png)       |
-| ![3dark10](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark10.png)     | ![3light10](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light10.png)     |
+|                                               Dark Mode                                                    |                                             Light Mode                                                     |
+|------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| ![1dark](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1dark.png)               | ![1light](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1light.png)             |
+| ![1onboarding1](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1onboarding1.png) | ![1onboarding2](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1onboarding2.png) |
+| ![1onboarding3](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1onboarding3.png) | ![1onboarding4](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1onboarding4.png) |
+| ![1onboarding5](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/1onboarding5.png) |                                                                                                            |
+| ![2dark1](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/2dark1.png)             | ![2light1](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/2light1.png)           |
+| ![2dark2](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/2dark2.png)             | ![2light2](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/2light2.png)           |
+| ![3dark1](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark1.png)             | ![3light1](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light1.png)           |
+| ![3dark2](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark2.png)             | ![3light2](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light2.png)           |
+| ![3dark3](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark3.png)             | ![3light3](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light3.png)           |
+| ![3dark4](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark4.png)             | ![3light4](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light4.png)           |
+| ![3dark5](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark5.png)             | ![3light5](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light5.png)           |
+| ![3dark6](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark6.png)             | ![3light6](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light6.png)           |
+| ![3dark7](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark7.png)             | ![3light7](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light7.png)           |
+| ![3dark8](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark8.png)             | ![3light8](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light8.png)           |
+| ![3dark9](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark9.png)             | ![3light9](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light9.png)           |
+| ![3dark10](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3dark10.png)           | ![3light10](https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/3light10.png)         |
 <div align="center">
   <img src="https://raw.githubusercontent.com/khalidabdelrazk/photos/refs/heads/main/final.png" width="300" alt=" "/>
 </div>
