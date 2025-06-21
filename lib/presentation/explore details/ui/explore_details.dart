@@ -53,7 +53,7 @@ class _ExploreDetailsState extends State<ExploreDetails> {
       tripInfo = [
         {"icon": Icons.star_rate_rounded, "value": (data?.rating ?? 0).toString()},
         {"icon": Icons.wb_sunny_rounded, "value": "$temperature°C"},
-        {"icon": Icons.attach_money_rounded, "value": '${data?.price}'},
+        {"icon": Icons.attach_money_rounded, "value": '${data?.price}${data?.type == 'hotel'? '/Day': '/Person'}'},
       ];
 
       tripDetailsViewModel.isTripFav(data!.id ?? '').then((isFav) {

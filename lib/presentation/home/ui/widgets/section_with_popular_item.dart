@@ -19,19 +19,6 @@ class SectionWithPopularItems extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title and See More Row
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Text(
-            title.toUpperCase(),
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-          ),
-        ),
-
-        const SizedBox(height: 14),
-
         // Horizontal List of Popular Items
         SizedBox(
           height: 220,

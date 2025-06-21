@@ -17,7 +17,7 @@ class CategoryItem extends StatelessWidget {
         curve: Curves.fastOutSlowIn,
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.only(right: 10),
-        width: 90, height: 90,
+        width: 100, height: 100,
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(10),
@@ -40,10 +40,10 @@ class CategoryItem extends StatelessWidget {
               ),
               child: Icon(data["icon"], size: 25, color: color)
             ),
-            SizedBox(height: 5,),
+            SizedBox(height: 10,),
             Expanded(
               child: Text(data["value"], maxLines: 1, overflow: TextOverflow.ellipsis,
-                style: TextTheme.of(context).bodyMedium,
+                style: TextTheme.of(context).bodySmall,
               ),
             ),
           ],
